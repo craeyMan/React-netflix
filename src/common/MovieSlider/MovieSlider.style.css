@@ -1,0 +1,22 @@
+.carousel-container {
+    overflow: hidden;
+    height: 440px;
+    padding: 0 20px;
+}
+
+.carousel-item-padding {
+    padding: 0 8px;
+  }
+  
+  .carousel-container .movie-card {
+    width: 220px !important;
+    height: 330px !important;
+  }
+
+  h3 {
+    color: white;         /* 흰색으로 명확하게 */
+    font-size: 20px;
+    margin: 16px 0;
+    z-index: 2;
+    position: relative;
+  }

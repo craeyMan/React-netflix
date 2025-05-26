@@ -6,7 +6,7 @@ import { responsive } from '../../../../../constants/responsive';
 import MovieSlider from '../../../../../common/MovieSlider/MovieSlider';
 
 
-const PopularMovieSlide = () => {
+const PopularMovieSlide = ({onMovieClick}) => {
     const {data,isLoading,isError,error} = usePopularMoviesQuery()
 
     if(isLoading) {
@@ -14,13 +14,14 @@ const PopularMovieSlide = () => {
     }
     if(isError) {
         return <Alert varient="danger">{error.massage}</Alert>
-    }
+    }if (!data || !Array.isArray(data.results)) return <h1>No data available</h1>;
     return (
     <div>
         <MovieSlider 
         title="Popular Movies" 
         movies={data.results} 
-        responsive={responsive} 
+        responsive={responsive}
+        onMovieClick={onMovieClick} 
         />
     </div>
   )

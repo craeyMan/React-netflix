@@ -9,7 +9,7 @@ import './UpcomingMovie.style.css';
 
 const responsive = {
   desktop: 
-  { breakpoint: { max: 1600, min: 1024 }, items: 7 },
+  { breakpoint: { max: 3000, min: 1024 }, items: 7 },
 
   tablet: 
   { breakpoint: { max: 1024, min: 768 }, items: 6 },

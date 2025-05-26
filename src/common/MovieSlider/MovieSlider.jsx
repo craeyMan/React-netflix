@@ -5,7 +5,7 @@ import 'react-multi-carousel/lib/styles.css';
 import MovieCard from '../MovieCard/MovieCard';
 
 
-const MovieSlider = ({ title, movies, responsive }) => {
+const MovieSlider = ({ title, movies, responsive, onMovieClick }) => {
   return ( 
     <div className="movie-slider-wrapper">
       <h3>{title}</h3>
@@ -23,7 +23,7 @@ const MovieSlider = ({ title, movies, responsive }) => {
       containerClass="carousel-container"
       >
       {movies.map((movie, index) => (
-        <MovieCard key={index} movie={movie} />
+        <MovieCard key={index} movie={movie} onMovieClick={onMovieClick} />
       ))}
     </Carousel>
 

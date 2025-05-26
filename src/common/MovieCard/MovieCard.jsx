@@ -5,12 +5,8 @@ import { useMovieGenreQyery } from '../../hooks/useMovieGenre';
 import { Badge } from 'react-bootstrap';
 
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, onMovieClick }) => {
   const [liked, setLiked] = useState(false);
-
-  const watchedMinutes = 1;
-  const totalMinutes = 94;
-
   const handleLike = () => setLiked(!liked);
 
   const {data:genreData} = useMovieGenreQyery()
@@ -38,12 +34,14 @@ const MovieCard = ({ movie }) => {
       <div className="movie-overlay">
         <div className="button-group">
           <FaPlay className="icon" />
-          <FaPlus className="icon" />
           <FaThumbsUp
             className={`icon ${liked ? 'liked' : ''}`}
             onClick={handleLike}
           />
-          <FaChevronDown className="icon" />
+          <FaChevronDown
+          className="icon info"
+          onClick={() => onMovieClick(movie)}
+        />
         </div>
 
         <div className="movie-title">

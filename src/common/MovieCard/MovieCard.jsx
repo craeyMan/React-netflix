@@ -57,9 +57,6 @@ const MovieCard = ({ movie }) => {
           </Badge>
         ))}
       </div>
-
-
-        <div className="recommendation-badge">📌 시청자 추천</div>
       </div>
     </div>
   );

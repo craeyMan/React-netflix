@@ -38,7 +38,7 @@ const AppLayout = () => {
             navbarScroll
           >
             <Nav.Link href="/" className="text-white">Home</Nav.Link>
-            <Nav.Link as={Link} to="/movies" className="text-white">Movies</Nav.Link>
+            <Nav.Link as={Link} to="/movies" className="text-white">All</Nav.Link>
           </Nav>
           <div className="d-flex">
               <SearchBox />

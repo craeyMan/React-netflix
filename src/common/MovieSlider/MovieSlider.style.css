@@ -1,22 +1,38 @@
+/* ✅ 전체 Carousel wrapper */
 .carousel-container {
-    overflow: hidden;
-    height: 440px;
-    padding: 0 20px;
+  padding: 0;               /* 좌우 여백 확보 (화살표 안에 들어오게) */
+  overflow: hidden;
+  height: auto;
+  box-sizing: border-box;
 }
 
-.carousel-item-padding {
-    padding: 0 8px;
-  }
-  
-  .carousel-container .movie-card {
-    width: 220px !important;
-    height: 330px !important;
-  }
+/* ✅ 각 슬라이드 카드 하나 (itemClass로 적용됨) */
+.movie-slider {
+  padding: 0 ;                /* 카드 간 간격을 좁게 */
+  margin: 0;
+  box-sizing: border-box;
+  flex: 0 0 auto;                /* 자동 확장 방지 */
+  width: auto;                   /* 라이브러리에서 강제한 width 무시 */
+}
 
-  h3 {
-    color: white;         /* 흰색으로 명확하게 */
-    font-size: 20px;
-    margin: 16px 0;
-    z-index: 2;
-    position: relative;
-  }
+/* ✅ Carousel 내부 트랙 (카드들이 들어있는 라인) */
+.react-multi-carousel-track {
+  justify-content: center;      /* 카드들을 가운데로 정렬 */
+  align-items: stretch;
+  margin: 0 auto;
+  display: flex;
+}
+
+/* ✅ 슬라이드 내부 카드 */
+.movie-card {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
+.movie-slider-wrapper {
+  margin-top: 80px; /* 👈 배너와 슬라이더 사이 여백 */
+}
+

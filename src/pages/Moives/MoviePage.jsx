@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { useSearchMovieQuery } from '../../hooks/useSearchMovie'
 import { useSearchParams } from 'react-router-dom'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
-import { Alert } from 'bootstrap'
+import { Alert } from 'react-bootstrap'
 import MovieCard from '../../common/MovieCard/MovieCard'
 import ReactPaginate from 'react-paginate';
 

@@ -78,3 +78,8 @@
     display: block;
   }
   
+  .right-icon{
+    margin-left: auto;
+    justify-content: flex-end;
+  }
+  

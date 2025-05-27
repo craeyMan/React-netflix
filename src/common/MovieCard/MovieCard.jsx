@@ -39,7 +39,7 @@ const MovieCard = ({ movie, onMovieClick }) => {
             onClick={handleLike}
           />
           <FaChevronDown
-          className="icon info"
+          className="icon right-icon"
           onClick={() => onMovieClick(movie)}
         />
         </div>

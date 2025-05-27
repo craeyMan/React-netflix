@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import YouTube from 'react-youtube';
 import { FaPlay, FaInfoCircle, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
-import MovieModal from '../MovieModal/MovieModal';
+import MovieModal from '../../MovieModal/MovieModal';
 import { usePopularMoviesQuery } from '../../../../hooks/usePopularMovies';
 import './Banner.style.css';
-import Button from 'react-bootstrap/Button';
 
 const Banner = () => {
   const { data, isLoading, isError, error } = usePopularMoviesQuery();
@@ -94,7 +93,7 @@ const Banner = () => {
           onReady={handlePlayerReady}
         />
 
-        <div className="banner-fade-bottom" />
+  <div className="banner-fade-bottom" />
 
         {/* 왼쪽 아래 텍스트 + 버튼 */}
         <div className="banner-content">

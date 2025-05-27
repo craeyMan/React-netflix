@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './MovieCard.style.css';
-import { FaPlay, FaPlus, FaThumbsUp, FaChevronDown } from 'react-icons/fa';
-import { useMovieGenreQyery } from '../../hooks/useMovieGenre';
+import { FaPlay, FaThumbsUp, FaChevronDown } from 'react-icons/fa';
+import { useMovieGenreQuery } from '../../hooks/useMovieGenre';
 import { Badge } from 'react-bootstrap';
 
 
@@ -9,7 +9,7 @@ const MovieCard = ({ movie, onMovieClick }) => {
   const [liked, setLiked] = useState(false);
   const handleLike = () => setLiked(!liked);
 
-  const {data:genreData} = useMovieGenreQyery()
+  const {data:genreData} = useMovieGenreQuery()
   const showGenre = (genreIdList) => {
     if(!genreData) 
       return []

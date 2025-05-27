@@ -1,13 +1,12 @@
 .search-input {
-    width: 150px;
-    transition: width 0.3s ease;
-    padding: 6px 12px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    outline: none;
-  }
-  
-  .search-input:focus {
-    width: 250px;
-  }
-  
+  width: 150px;
+  transition: width 0.3s ease;
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.search-input:focus {
+  width: 250px;
+}

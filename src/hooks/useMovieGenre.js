@@ -5,7 +5,7 @@ const fetchMovieGenre = () => {
     return api.get(`/genre/movie/list`)
 }
 
-export const useMovieGenreQyery = () => {
+export const useMovieGenreQuery = () => {
     return useQuery ({
         querykey:["movie-genre"],
         queryFn:fetchMovieGenre,

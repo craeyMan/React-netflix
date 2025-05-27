@@ -2,12 +2,13 @@ import React from 'react';
 import { useTopRatedMovies } from '../../../../hooks/useTopRatedMovies';
 import MovieSlider from '../../../../common/MovieSlider/MovieSlider';
 import Alert from 'react-bootstrap/Alert';
+import Spinner from '../Spinner/Spinner';
 
 // ✅ onMovieClick props 받기
 const TopRatedMovieSlide = ({ onMovieClick }) => {
   const { data, isLoading, isError, error } = useTopRatedMovies();
 
-  if (isLoading) return <h3>Loading...</h3>;
+  if (isLoading) return <Spinner />;
   if (isError) return <Alert variant="danger">{error.message}</Alert>;
 
   return (

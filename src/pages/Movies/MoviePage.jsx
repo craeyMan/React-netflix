@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MovieGenreSection from '../../common/MovieGenreSection/MovieGenreSection';
+import MovieModal from '../Homepage/MovieModal/MovieModal';
 
 const genreList = [
   { id: 28, title: '액션' },
@@ -23,7 +24,20 @@ const genreList = [
   { id: 37, title: '서부극' },
 ];
 
-const MoviePage = ({ onMovieClick }) => {
+const MoviePage = () => {
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleMovieClick = (movie) => {
+    setSelectedMovie(movie);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedMovie(null);
+    setModalOpen(false);
+  };
+
   return (
     <div>
       {genreList.map((genre) => (
@@ -31,9 +45,18 @@ const MoviePage = ({ onMovieClick }) => {
           key={genre.id}
           genreId={genre.id}
           title={genre.title}
-          onMovieClick={onMovieClick}
+          onMovieClick={handleMovieClick}
         />
       ))}
+
+      {selectedMovie && (
+        <MovieModal
+          show={modalOpen}
+          onClose={handleCloseModal}
+          handleClose={handleCloseModal}
+          movie={selectedMovie}
+        />
+      )}
     </div>
   );
 };

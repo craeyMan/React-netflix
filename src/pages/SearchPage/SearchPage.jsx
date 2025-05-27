@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Container, Spinner, Alert } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate';
-import { useSearchMovieQuery } from '../hooks/useSearchMovie';
-import MovieCard from '../common/MovieCard/MovieCard';
+import { useSearchMovieQuery } from '../../hooks/useSearchMovie';
+import MovieCard from '../../common/MovieCard/MovieCard';
+import MovieModal from '../Homepage/MovieModal/MovieModal';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import './SearchPage.style.css';
 
 const responsive = {
   desktop: { breakpoint: { max: 3000, min: 1024 }, items: 7 },
@@ -19,12 +21,38 @@ const SearchPage = () => {
   const [page, setPage] = useState(1);
   const { data, isLoading, isError, error } = useSearchMovieQuery({ keyword, page });
 
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    setPage(1);
+    setSelectedMovie(null);
+    setModalOpen(false);
+  }, [keyword]);
+
   const handlePageClick = ({ selected }) => {
     setPage(selected + 1);
   };
 
-  if (!keyword) return <Alert variant="warning">검색어를 입력해주세요.</Alert>;
-  if (isLoading) return <Spinner animation="border" variant="danger" />;
+  const handleMovieClick = (movie) => {
+    setSelectedMovie(movie);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedMovie(null);
+    setModalOpen(false);
+  };
+
+  if (!keyword) 
+    return <Alert variant="warning">검색어를 입력해주세요.</Alert>;
+  if (isLoading) {
+    return (
+      <div className="loading-overlay">
+        <Spinner animation="border" variant="danger" className="center-spinner" />
+      </div>
+    );
+  }
   if (isError) return <Alert variant="danger">{error.message}</Alert>;
 
   const movies = data?.results?.filter((m) => m.poster_path);
@@ -43,7 +71,7 @@ const SearchPage = () => {
           containerClass="carousel-container"
         >
           {movies.map((movie, index) => (
-            <MovieCard key={index} movie={movie} />
+            <MovieCard key={index} movie={movie} onMovieClick={handleMovieClick} />
           ))}
         </Carousel>
       ) : (
@@ -70,6 +98,14 @@ const SearchPage = () => {
         activeClassName="active"
         forcePage={page - 1}
       />
+
+      {selectedMovie && (
+        <MovieModal
+          show={modalOpen}
+          onClose={handleCloseModal}
+          movie={selectedMovie}
+        />
+      )}
     </Container>
   );
 };

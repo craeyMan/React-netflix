@@ -1,7 +1,5 @@
-import React from 'react'
-import Button from 'react-bootstrap/Button';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Outlet, useNavigate } from 'react-router-dom';
@@ -37,8 +35,8 @@ const AppLayout = () => {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="/" className="text-white">Home</Nav.Link>
-            <Nav.Link as={Link} to="/movies" className="text-white">All</Nav.Link>
+            <Nav.Link as={Link} to="/movies" className="text-white">Movies</Nav.Link>
+            <Nav.Link as={Link} to="/board" className="text-white">게시판</Nav.Link>
           </Nav>
           <div className="d-flex">
               <SearchBox />

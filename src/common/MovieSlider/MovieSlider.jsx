@@ -7,7 +7,7 @@ import MovieCard from '../MovieCard/MovieCard';
 
 const MovieSlider = ({ title, movies, responsive, onMovieClick }) => {
   if (!Array.isArray(movies)) {
-    return null; // 또는 <div>영화 정보를 불러오는 중입니다...</div>
+    return null; 
   }
   
   return ( 

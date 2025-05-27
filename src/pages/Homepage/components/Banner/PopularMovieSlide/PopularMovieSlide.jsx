@@ -4,13 +4,13 @@ import { Alert } from 'react-bootstrap'
 import 'react-multi-carousel/lib/styles.css';
 import { responsive } from '../../../../../constants/responsive';
 import MovieSlider from '../../../../../common/MovieSlider/MovieSlider';
-
+import Spinner from '../../Spinner/Spinner';
 
 const PopularMovieSlide = ({onMovieClick}) => {
     const {data,isLoading,isError,error} = usePopularMoviesQuery()
 
     if(isLoading) {
-        return <h1>Loading...</h1>
+        return <Spinner />
     }
     if(isError) {
         return <Alert varient="danger">{error.massage}</Alert>

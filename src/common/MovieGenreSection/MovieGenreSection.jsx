@@ -5,6 +5,8 @@ import 'react-multi-carousel/lib/styles.css';
 import MovieCard from '../../common/MovieCard/MovieCard';
 import { useMovieGenreQuery } from '../../hooks/useMovieGenreQuery';
 import './MovieGenreSection.style.css';
+import Spinner from '../../pages/Homepage/components/Spinner/Spinner';
+
 
 const responsive = {
   desktop: { breakpoint: { max: 3000, min: 1024 }, items: 7 },
@@ -18,7 +20,7 @@ const MovieGenreSection = ({ genreId, title, onMovieClick }) => {
   const movies = data?.results;
   const filteredMovies = movies?.filter((movie) => movie.poster_path);
 
-  if (isLoading) return <h1>{title} 로딩 중...</h1>;
+  if (isLoading) return <Spinner />;
   if (isError) return <Alert variant="danger">{title} 에러: {error.message}</Alert>;
   if (!filteredMovies || filteredMovies.length === 0) return <p>{title} 영화 없음</p>;
 

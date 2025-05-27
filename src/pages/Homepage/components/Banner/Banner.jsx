@@ -5,6 +5,7 @@ import { FaPlay, FaInfoCircle, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import MovieModal from '../../MovieModal/MovieModal';
 import { usePopularMoviesQuery } from '../../../../hooks/usePopularMovies';
 import './Banner.style.css';
+import Spinner from '../Spinner/Spinner';
 
 const Banner = () => {
   const { data, isLoading, isError, error } = usePopularMoviesQuery();
@@ -68,7 +69,7 @@ const Banner = () => {
     }
   };
 
-  if (isLoading || !randomMovie || !trailerKey) return <div>Loading...</div>;
+  if (isLoading || !randomMovie || !trailerKey) return <Spinner />;
   if (isError) return <div>Error: {error.message}</div>;
 
   return (

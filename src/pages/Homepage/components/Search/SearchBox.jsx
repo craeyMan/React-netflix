@@ -7,13 +7,20 @@ const SearchBox = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // 🔥 경로가 검색이 아닐 때 keyword 리셋
+  useEffect(() => {
+    if (!location.pathname.startsWith('/movies/search')) {
+      setKeyword('');
+    }
+  }, [location.pathname]);
+
+  // 🔁 keyword 변경 시 검색 수행
   useEffect(() => {
     const delay = setTimeout(() => {
       if (keyword.trim().length > 0) {
         navigate(`/movies/search?q=${keyword}`);
       } else {
-        // ✅ 글씨를 다 지웠을 때만 홈으로 보내기
-        // 단, 현재 위치가 검색 페이지일 때만
+        // 검색창 비웠을 때만 홈으로
         if (location.pathname.startsWith('/movies/search')) {
           navigate('/');
         }

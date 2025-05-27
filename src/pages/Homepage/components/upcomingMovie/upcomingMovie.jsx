@@ -5,6 +5,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import MovieCard from '../../../../common/MovieCard/MovieCard';
 import './UpcomingMovie.style.css';
+import Spinner from '../Spinner/Spinner';
 
 const responsive = {
   desktop: { breakpoint: { max: 3000, min: 1024 }, items: 7 },
@@ -12,10 +13,9 @@ const responsive = {
   mobile: { breakpoint: { max: 768, min: 0 }, items: 5 },
 };
 
-// ✅ onMovieClick 추가
 const UpcomingMovie = ({ onMovieClick }) => {
   const { data, isLoading, isError, error } = useUpcomingMoviesQuery();
-  if (isLoading) return <h1>Loading upcoming movies...</h1>;
+  if (isLoading) return <Spinner />;
   if (isError) return <Alert variant="danger">{error.message}</Alert>;
 
   return (

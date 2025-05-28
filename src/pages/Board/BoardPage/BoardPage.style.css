@@ -1,16 +1,15 @@
 .board-page {
-    margin-top: 40px;
-    color: white;
-  }
-  
-  .board-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .board-table td, .board-table th {
-    text-align: center;
-  }
-  
+  margin-top: 40px;
+  color: white;
+}
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.board-table td, .board-table th {
+  text-align: center;
+}

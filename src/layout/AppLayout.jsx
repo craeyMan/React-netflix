@@ -7,6 +7,7 @@ import { useState } from 'react';
 import SearchBox from '../pages/Homepage/components/Search/SearchBox';
 import { Link } from 'react-router-dom';
 
+
 const AppLayout = () => {
   const [keyword,setKeyword] = useState("");
   const navigate = useNavigate()
@@ -35,11 +36,12 @@ const AppLayout = () => {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link as={Link} to="/movies" className="text-white">Movies</Nav.Link>
+            <Nav.Link as={Link} to="/movies" className="text-white">영화</Nav.Link>
             <Nav.Link as={Link} to="/board" className="text-white">게시판</Nav.Link>
           </Nav>
           <div className="d-flex">
               <SearchBox />
+              <Nav.Link as={Link} to="/login" className="text-white">로그인</Nav.Link>
             </div>
         </Navbar.Collapse>
       </Container>

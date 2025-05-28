@@ -5,6 +5,7 @@
   border-radius: 5px;
   border: 1px solid #ccc;
   outline: none;
+  margin-left: -250px;
 }
 
 .search-input:focus {

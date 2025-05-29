@@ -1,6 +1,9 @@
 .board-page {
   margin-top: 40px;
   color: white;
+  max-width: 900px;       /* 전체 너비 제한 (예: 900px) */
+  margin: 0 auto;         /* 가운데 정렬 */
+  padding: 20px; 
 }
 
 .board-header {
@@ -12,4 +15,38 @@
 
 .board-table td, .board-table th {
   text-align: center;
+}
+
+.board-table th:nth-child(4),
+.board-table td:nth-child(4) {
+  width: 180px; /* 또는 160px ~ 200px 정도로 원하는 크기 설정 */
+  white-space: nowrap; /* 줄바꿈 방지 */
+}
+
+.common-button {
+  height: 38px;
+  font-size: 16px;
+  padding: 6px 16px;
+  border-radius: 8px;
+}
+
+.common-button {
+  height: 38px;
+  font-size: 16px;
+  padding: 6px 16px;
+  border-radius: 8px;
+}
+
+.common-input {
+  width: 150px;
+  transition: width 0.3s ease;
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-left: -210px;
+}
+
+.common-input:focus {
+  width: 250px;
 }

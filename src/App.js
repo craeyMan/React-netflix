@@ -23,7 +23,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider> {/* ✅ 이거 Routes 바깥에서 앱 전체를 감싸야 함 */}
+      <AuthProvider> 
         <BoardProvider>
           <Routes>
             <Route path="/" element={<AppLayout />}>

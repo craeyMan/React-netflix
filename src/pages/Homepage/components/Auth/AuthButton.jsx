@@ -3,13 +3,17 @@ import { useAuth } from '../../../../hooks/useAuth';
 import LoginModal from './LoginModal/LoginModal';
 
 const AuthButton = () => {
-  const { isLoggedIn, logout, showLoginModal, toggleLoginModal } = useAuth();
+  const { isLoggedIn, logout, toggleLoginModal, showLoginModal } = useAuth();
 
   return (
     <>
-      <button onClick={isLoggedIn ? logout : toggleLoginModal} className="btn btn-danger">
+      <span
+        onClick={isLoggedIn ? logout : toggleLoginModal}
+        className="nav-login-text"
+        style={{ color: 'white', cursor: 'pointer', fontSize: '1rem', padding: '8px 12px' }}
+      >
         {isLoggedIn ? '로그아웃' : '로그인'}
-      </button>
+      </span>
       {showLoginModal && <LoginModal />}
     </>
   );

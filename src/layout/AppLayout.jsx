@@ -6,7 +6,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import SearchBox from '../pages/Homepage/components/Search/SearchBox';
 import { Link } from 'react-router-dom';
-
+import AuthButton from '../pages/Homepage/components/Auth/AuthButton';
 
 const AppLayout = () => {
   const [keyword,setKeyword] = useState("");
@@ -41,7 +41,7 @@ const AppLayout = () => {
           </Nav>
           <div className="d-flex">
               <SearchBox />
-              <Nav.Link as={Link} to="/login" className="text-white">로그인</Nav.Link>
+              <AuthButton />
             </div>
         </Navbar.Collapse>
       </Container>

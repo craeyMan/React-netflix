@@ -14,14 +14,16 @@ import NewPostPage from './pages/Board/NewPostPage/NewPostPage';
 import PostDetailPage from './pages/Board/PostDetailPage/PostDetailPage';
 import { BoardProvider } from './pages/Board/BoardContext';
 import EditPostPage from './pages/Board/EditPostPage/EditPostPage';
-import AuthButton from './pages/Homepage/components/Auth/AuthButton';
+import { AuthProvider } from './context/AuthContext';
+import SignupPage from './pages/Homepage/components/Auth/SignupPage/SignupPage';
+
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      
+      <AuthProvider> {/* ✅ 이거 Routes 바깥에서 앱 전체를 감싸야 함 */}
         <BoardProvider>
           <Routes>
             <Route path="/" element={<AppLayout />}>
@@ -32,22 +34,23 @@ function App() {
                 <Route path="search" element={<SearchPage />} />
                 <Route path=":id" element={<MovieDetailPage />} />
               </Route>
-              <Route path="login">
-              <Route path="login" element={<AuthButton />} />
-              </Route>
 
               <Route path="board">
                 <Route index element={<BoardPage />} />
                 <Route path="new" element={<NewPostPage />} />
                 <Route path=":id" element={<PostDetailPage />} />
-                <Route path="/board/edit/:id" element={<EditPostPage />} />
+                <Route path="edit/:id" element={<EditPostPage />} />
               </Route>
             </Route>
 
+            <Route path="/signup" element={<SignupPage />} />
+
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
 
           <Footer />
         </BoardProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

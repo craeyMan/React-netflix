@@ -43,6 +43,7 @@ const NewPostPage = () => {
             onChange={(e) => setTitle(e.target.value)}
             required
             maxLength={15}
+            
           />
         </Form.Group>
 
@@ -53,6 +54,7 @@ const NewPostPage = () => {
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
             required
+            
           />
         </Form.Group>
 
@@ -64,6 +66,7 @@ const NewPostPage = () => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
+            
           />
         </Form.Group>
 

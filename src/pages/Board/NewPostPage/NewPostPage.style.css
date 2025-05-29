@@ -2,18 +2,23 @@
   max-width: 600px;
   margin: 2rem auto;
   padding: 1rem;
-  color: white;
+  background-color: black;
 }
 
-.new-post-form input,
-.new-post-form textarea {
-  width: 100%;
+.form-control {
+  background-color: transparent;
+  border: 1px solid #ff3c3c;
   padding: 12px;
-  margin-bottom: 1rem;
   border-radius: 4px;
-  border: 1px solid #ccc;
-  background: #333;
-  color: white;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.custom-input:focus,
+.custom-textarea:focus {
+  border-color: #ff5e5e;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 60, 60, 0.3);
 }
 
 .new-post-form textarea {
@@ -23,7 +28,6 @@
 
 .new-post-form button {
   background-color: #e50914;
-  color: white;
   padding: 12px;
   width: 100%;
   font-weight: bold;

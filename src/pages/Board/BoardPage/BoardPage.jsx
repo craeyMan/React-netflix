@@ -46,18 +46,16 @@ const BoardPage = () => {
   <h2 className="text-white">게시판</h2>
 
   <div className="d-flex align-items-center gap-2">
-    <Form onSubmit={handleSearch} className="d-flex align-items-center">
-      <Form.Control
-        type="text"
-        placeholder="제목 검색"
-        value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
-        className="common-input"
-      />
-      <Button type="submit" className="common-button ms-2">
-        검색
-      </Button>
-    </Form>
+  <Form onSubmit={handleSearch} className="d-flex align-items-center gap-2">
+  <input
+    type="text"
+    placeholder="제목 검색"
+    value={keyword}
+    onChange={(e) => setKeyword(e.target.value)}
+    className="common-input"
+  />
+  <Button type="submit" className="common-button">검색</Button>
+</Form>
 
       <Button
         variant="primary"
@@ -68,8 +66,6 @@ const BoardPage = () => {
       </Button>
     </div>
   </div>
-      
-
       <Table striped bordered hover responsive className="board-table">
         <thead>
           <tr>

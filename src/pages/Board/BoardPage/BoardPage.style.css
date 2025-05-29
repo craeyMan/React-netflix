@@ -1,11 +1,13 @@
 .board-page {
   margin-top: 40px;
   color: white;
-  max-width: 900px;       /* 전체 너비 제한 (예: 900px) */
-  margin: 0 auto;         /* 가운데 정렬 */
-  padding: 20px; 
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: black;
 }
 
+/* 상단 제목 + 버튼 라인 */
 .board-header {
   display: flex;
   justify-content: space-between;
@@ -13,40 +15,57 @@
   margin-bottom: 20px;
 }
 
-.board-table td, .board-table th {
+/* 테이블 스타일 */
+.board-table {
+  border-collapse: collapse;
+  width: 100%;
+  color: white;
+  background-color: transparent;
+}
+
+.board-table td,
+.board-table th {
   text-align: center;
+  background-color: transparent;
+  border: 1px solid #ff3c3c;   /* 빨간 선 */
+  padding: 12px;
+  color: white;
 }
 
 .board-table th:nth-child(4),
 .board-table td:nth-child(4) {
-  width: 180px; /* 또는 160px ~ 200px 정도로 원하는 크기 설정 */
-  white-space: nowrap; /* 줄바꿈 방지 */
+  width: 180px;
+  white-space: nowrap;
 }
 
+/* 버튼 스타일 (검색, 글쓰기 전부) */
 .common-button {
-  height: 38px;
+  height: 42px;
   font-size: 16px;
   padding: 6px 16px;
   border-radius: 8px;
+  white-space: nowrap;       /* ✅ 검색 텍스트 줄바꿈 방지 */
 }
 
-.common-button {
-  height: 38px;
-  font-size: 16px;
-  padding: 6px 16px;
-  border-radius: 8px;
-}
-
+/* 검색창 스타일 */
 .common-input {
+  height: 42px;
+  font-size: 16px;
   width: 150px;
   transition: width 0.3s ease;
   padding: 6px 12px;
   border-radius: 5px;
-  border: 1px solid #ccc;
-  outline: none;
-  margin-left: -210px;
+  border: 1px solid #ff3c3c;
+  background-color: black;
+  color: white;
+  vertical-align: middle; 
 }
 
+/* 검색창 포커스 시 */
 .common-input:focus {
   width: 250px;
+  background-color: black ;
+  border-color: #ff5e5e;
+  box-shadow: 0 0 0 2px rgba(255, 60, 60, 0.3);
+  color: white;
 }

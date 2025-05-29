@@ -14,8 +14,23 @@
   margin-bottom: 1rem;
 }
 
+.custom-input,
+.custom-textarea {
+  background-color: black;
+  border: 1px solid #ff3c3c;
+  color: white;
+  padding: 12px;
+  border-radius: 4px;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-size: 16px;
+}
+
+/* 포커스 시에도 흰 배경 없이 유지 */
 .custom-input:focus,
 .custom-textarea:focus {
+  background-color: black;
+  color: white;
   border-color: #ff5e5e;
   outline: none;
   box-shadow: 0 0 0 2px rgba(255, 60, 60, 0.3);
@@ -34,4 +49,22 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+
+.outline-red-btn {
+  background-color: transparent;
+  border: 1px solid #ff3c3c;
+  color: white;
+  height: 42px;
+  font-size: 16px;
+  padding: 6px 16px;
+  border-radius: 8px;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.outline-red-btn:hover {
+  background-color: #ff3c3c;
+  color: white;
 }

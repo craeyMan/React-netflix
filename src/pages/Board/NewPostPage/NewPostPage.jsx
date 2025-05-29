@@ -43,7 +43,7 @@ const NewPostPage = () => {
             onChange={(e) => setTitle(e.target.value)}
             required
             maxLength={15}
-            
+            className="custom-input"
           />
         </Form.Group>
 
@@ -54,7 +54,7 @@ const NewPostPage = () => {
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
             required
-            
+            className="custom-input"
           />
         </Form.Group>
 
@@ -66,11 +66,11 @@ const NewPostPage = () => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
-            
+            className="custom-input"
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button type="submit" className="outline-red-btn">
           등록
         </Button>
       </Form>

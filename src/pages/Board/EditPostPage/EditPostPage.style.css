@@ -4,4 +4,30 @@
     max-width: 800px;
   }
   
+  .custom-input,
+  .custom-textarea {
+    background-color: black;
+    border: 1px solid #ff3c3c;
+    color: white;
+    padding: 12px;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: 16px;
+  }
   
+  .custom-input:focus,
+  .custom-textarea:focus {
+    background-color: black;
+    color: white;
+    border-color: #ff5e5e;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 60, 60, 0.3);
+  }
+  
+  /* ✅ disabled일 때도 검정 배경 유지 */
+  .custom-input:disabled {
+    background-color: black;
+    color: white;
+    opacity: 1;
+  }

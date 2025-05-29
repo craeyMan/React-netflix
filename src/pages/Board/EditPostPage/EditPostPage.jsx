@@ -53,6 +53,7 @@ const EditPostPage = () => {
             onChange={(e) => setTitle(e.target.value)}
             required
             maxLength={15}
+            className="custom-input" 
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -61,6 +62,7 @@ const EditPostPage = () => {
             type="text"
             value={author}
             disabled
+            className="custom-input" 
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -71,6 +73,7 @@ const EditPostPage = () => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
+            className="custom-input" 
           />
         </Form.Group>
         <Button variant="primary" type="submit">

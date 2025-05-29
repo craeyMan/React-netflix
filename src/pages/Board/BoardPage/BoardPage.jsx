@@ -54,13 +54,13 @@ const BoardPage = () => {
     onChange={(e) => setKeyword(e.target.value)}
     className="common-input"
   />
-  <Button type="submit" className="common-button">검색</Button>
+  <Button type="submit" className="outline-red-btn ms-2">검색</Button>
 </Form>
 
       <Button
         variant="primary"
         onClick={() => navigate('/board/new')}
-        className="common-button"
+        className="outline-red-btn"
       >
         글쓰기
       </Button>

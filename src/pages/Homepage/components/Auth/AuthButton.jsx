@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from '../../../../context/AuthContext';
 import LoginModal from './LoginModal/LoginModal';
 
 const AuthButton = () => {
   const { isLoggedIn, logout, toggleLoginModal, showLoginModal } = useAuth();
+
+  // ✅ 로그인 성공 시 모달 자동 닫기 보정
+  useEffect(() => {
+    if (isLoggedIn && showLoginModal) {
+      toggleLoginModal();
+    }
+  }, [isLoggedIn]);
 
   return (
     <>

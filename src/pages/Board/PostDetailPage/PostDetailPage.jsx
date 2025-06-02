@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Button, Container } from 'react-bootstrap';
-import axios from 'axios';
+import api from '../../../utils/api'; 
 import './PostDetailPage.style.css';
 
 const PostDetailPage = () => {
@@ -12,7 +12,7 @@ const PostDetailPage = () => {
   const [post, setPost] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:3500/posts/${id}`)
+    api.get(`/posts/${id}`)
       .then((res) => setPost(res.data))
       .catch(() => {
         alert('게시글을 찾을 수 없습니다.');
@@ -23,7 +23,7 @@ const PostDetailPage = () => {
   const handleDelete = async () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
-        await axios.delete(`http://localhost:3500/posts/${id}`);
+        await api.delete(`/posts/${id}`);
         alert('삭제되었습니다!');
         navigate('/board');
       } catch (err) {
@@ -53,26 +53,25 @@ const PostDetailPage = () => {
             </span>
           </div>
         </div>
-  
+
         <hr />
-  
+
         <p className="post-content">{post.content}</p>
       </div>
-  
+
       <div className="d-flex gap-2 mt-3">
         <Button className="outline-red-btn" onClick={() => navigate('/board')}>
           목록으로
         </Button>
-        <Button className="outline-red-btn"onClick={handleDelete}>
+        <Button className="outline-red-btn" onClick={handleDelete}>
           삭제하기
         </Button>
-        <Button className="outline-red-btn"onClick={() => navigate(`/board/edit/${post.id}`)}>
+        <Button className="outline-red-btn" onClick={() => navigate(`/board/edit/${post.id}`)}>
           수정하기
         </Button>
       </div>
     </Container>
   );
-  
 };
 
 export default PostDetailPage;

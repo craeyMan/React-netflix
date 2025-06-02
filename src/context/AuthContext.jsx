@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+// ✅ src/context/AuthContext.jsx
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
@@ -8,23 +9,37 @@ export const AuthProvider = ({ children }) => {
 
   const login = () => {
     setIsLoggedIn(true);
-    setShowLoginModal(false);
   };
 
   const logout = () => {
     setIsLoggedIn(false);
+    localStorage.removeItem("token");
   };
 
   const toggleLoginModal = () => {
     setShowLoginModal(prev => !prev);
   };
 
+  // ✅ 앱 시작 시 자동 로그인
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, showLoginModal, toggleLoginModal }}>
+    <AuthContext.Provider value={{
+      isLoggedIn,
+      login,
+      logout,
+      showLoginModal,
+      toggleLoginModal,
+      setShowLoginModal // ✅ 추가!
+    }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// ✅ 여기에 alias 추가
 export const useAuth = () => useContext(AuthContext);

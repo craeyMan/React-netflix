@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import YouTube from 'react-youtube';
 import { FaPlay, FaInfoCircle, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import MovieModal from '../../MovieModal/MovieModal';
 import { usePopularMoviesQuery } from '../../../../hooks/usePopularMovies';
 import './Banner.style.css';
 import Spinner from '../Spinner/Spinner';
+import api from '../../../../utils/api'; 
 
 const Banner = () => {
   const { data, isLoading, isError, error } = usePopularMoviesQuery();
@@ -15,7 +15,6 @@ const Banner = () => {
   const [showModal, setShowModal] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [player, setPlayer] = useState(null);
-  const API_TOKEN = process.env.REACT_APP_TMDB_BEARER;
 
   useEffect(() => {
     if (!data?.results) return;
@@ -26,13 +25,10 @@ const Banner = () => {
       for (const movie of shuffled) {
         try {
           const [videosRes, releaseRes] = await Promise.all([
-            axios.get(`https://api.themoviedb.org/3/movie/${movie.id}/videos`, {
-              headers: { Authorization: `Bearer ${API_TOKEN}` },
+            api.get(`/movie/${movie.id}/videos`, {
               params: { language: 'ko-KR' },
             }),
-            axios.get(`https://api.themoviedb.org/3/movie/${movie.id}/release_dates`, {
-              headers: { Authorization: `Bearer ${API_TOKEN}` },
-            }),
+            api.get(`/movie/${movie.id}/release_dates`),
           ]);
 
           const trailer = videosRes.data.results.find(
@@ -94,7 +90,7 @@ const Banner = () => {
           onReady={handlePlayerReady}
         />
 
-  <div className="banner-fade-bottom" />
+        <div className="banner-fade-bottom" />
 
         {/* 왼쪽 아래 텍스트 + 버튼 */}
         <div className="banner-content">

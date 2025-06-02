@@ -1,8 +1,7 @@
-// src/pages/Board/EditPostPage/EditPostPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button, Container } from 'react-bootstrap';
-import axios from 'axios';
+import api from '../../../utils/api'; 
 import './EditPostPage.style.css';
 
 const EditPostPage = () => {
@@ -14,7 +13,7 @@ const EditPostPage = () => {
   const [author, setAuthor] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:3500/posts/${id}`)
+    api.get(`/posts/${id}`)
       .then((res) => {
         const post = res.data;
         setTitle(post.title);
@@ -32,9 +31,9 @@ const EditPostPage = () => {
     const updatedPost = { title, content, author };
 
     try {
-      await axios.put(`http://localhost:3500/posts/${id}`, updatedPost);
+      await api.put(`/posts/${id}`, updatedPost);
       alert('게시글이 수정되었습니다!');
-      navigate('/board', { state: { updated: true } }); // ✅ 상태와 함께 이동
+      navigate('/board', { state: { updated: true } });
     } catch (error) {
       alert('수정 중 오류 발생');
       console.error(error);
@@ -53,7 +52,7 @@ const EditPostPage = () => {
             onChange={(e) => setTitle(e.target.value)}
             required
             maxLength={15}
-            className="custom-input" 
+            className="custom-input"
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -62,7 +61,7 @@ const EditPostPage = () => {
             type="text"
             value={author}
             disabled
-            className="custom-input" 
+            className="custom-input"
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -73,7 +72,7 @@ const EditPostPage = () => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
-            className="custom-input" 
+            className="custom-input"
           />
         </Form.Group>
         <Button variant="primary" type="submit">

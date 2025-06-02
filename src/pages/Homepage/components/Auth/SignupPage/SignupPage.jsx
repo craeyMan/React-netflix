@@ -60,8 +60,6 @@ const SignupPage = ({ setIsSignup }) => {
           </select>
         </div>
 
-        <input name="email" placeholder="본인 확인 이메일 (선택)" value={formData.email} onChange={handleChange} />
-
         <button type="submit" className="login-button">가입하기</button>
         <button type="button" className="signup-link" onClick={() => setIsSignup(false)}>로그인으로 돌아가기</button>
       </form>

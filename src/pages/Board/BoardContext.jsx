@@ -9,7 +9,7 @@ export const BoardProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
 
   const fetchPosts = () => {
-    axios.get('http://localhost:2222/posts')
+    axios.get('http://localhost:3500/posts')
       .then((res) => setPosts(res.data))
       .catch((err) => console.error('게시글 불러오기 실패:', err));
   };
@@ -19,7 +19,7 @@ export const BoardProvider = ({ children }) => {
   }, []);
 
   const addPost = async (post) => {
-    await axios.post('http://localhost:2222/posts', post);
+    await axios.post('http://localhost:3500/posts', post);
     fetchPosts(); // 🎯 등록 후 다시 불러오기 (자동 반영)
   };
 

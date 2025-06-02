@@ -12,7 +12,7 @@ const BoardPage = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await axios.get('http://localhost:2222/posts');
+      const res = await axios.get('http://localhost:3500/posts');
       setPosts(res.data);
     } catch (err) {
       console.error('게시글 목록 불러오기 실패:', err);
@@ -22,7 +22,7 @@ const BoardPage = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.get(`http://localhost:2222/posts/search?keyword=${keyword}`);
+      const res = await axios.get(`http://localhost:3500/posts/search?keyword=${keyword}`);
       setPosts(res.data);
     } catch (err) {
       console.error('검색 실패:', err);

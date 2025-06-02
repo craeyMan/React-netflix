@@ -14,7 +14,7 @@ const EditPostPage = () => {
   const [author, setAuthor] = useState('');
 
   useEffect(() => {
-    axios.get(`http://localhost:2222/posts/${id}`)
+    axios.get(`http://localhost:3500/posts/${id}`)
       .then((res) => {
         const post = res.data;
         setTitle(post.title);
@@ -32,7 +32,7 @@ const EditPostPage = () => {
     const updatedPost = { title, content, author };
 
     try {
-      await axios.put(`http://localhost:2222/posts/${id}`, updatedPost);
+      await axios.put(`http://localhost:3500/posts/${id}`, updatedPost);
       alert('게시글이 수정되었습니다!');
       navigate('/board', { state: { updated: true } }); // ✅ 상태와 함께 이동
     } catch (error) {

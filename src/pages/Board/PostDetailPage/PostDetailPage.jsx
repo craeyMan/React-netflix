@@ -12,7 +12,7 @@ const PostDetailPage = () => {
   const [post, setPost] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:2222/posts/${id}`)
+    axios.get(`http://localhost:3500/posts/${id}`)
       .then((res) => setPost(res.data))
       .catch(() => {
         alert('게시글을 찾을 수 없습니다.');
@@ -23,7 +23,7 @@ const PostDetailPage = () => {
   const handleDelete = async () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
-        await axios.delete(`http://localhost:2222/posts/${id}`);
+        await axios.delete(`http://localhost:3500/posts/${id}`);
         alert('삭제되었습니다!');
         navigate('/board');
       } catch (err) {

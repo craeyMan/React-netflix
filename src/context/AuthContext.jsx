@@ -26,4 +26,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuthContext = () => useContext(AuthContext);
+// ✅ 여기에 alias 추가
+export const useAuth = () => useContext(AuthContext);

@@ -16,7 +16,8 @@ import { BoardProvider } from './pages/Board/BoardContext';
 import EditPostPage from './pages/Board/EditPostPage/EditPostPage';
 import { AuthProvider } from './context/AuthContext';
 import SignupPage from './pages/Homepage/components/Auth/SignupPage/SignupPage';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ function App() {
           <Footer />
         </BoardProvider>
       </AuthProvider>
+      <ToastContainer position="top-center" autoClose={2000} />
     </QueryClientProvider>
   );
 }

@@ -16,7 +16,7 @@ const BoardPage = () => {
   const fetchPosts = async () => {
     try {
       const res = await authApi.get('/posts');
-      setPosts(res.data.reverse()); // 최신글이 위로 오게
+      setPosts(res.data.reverse());
     } catch (err) {
       console.error('📛 게시글 목록 불러오기 실패:', err.message);
     }
@@ -27,7 +27,7 @@ const BoardPage = () => {
     try {
       const res = await authApi.get(`/posts/search?keyword=${keyword}`);
       setPosts(res.data.reverse());
-      setCurrentPage(1); // 검색 시 페이지 초기화
+      setCurrentPage(1);
     } catch (err) {
       console.error('📛 검색 실패:', err.message);
     }
@@ -44,7 +44,6 @@ const BoardPage = () => {
     }
   }, [location.state]);
 
-  // 페이징 계산
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -54,7 +53,6 @@ const BoardPage = () => {
     if (totalPages <= 1) return null;
 
     const items = [];
-
     items.push(
       <Pagination.Prev
         key="prev"
@@ -63,54 +61,18 @@ const BoardPage = () => {
       />
     );
 
-    items.push(
-      <Pagination.Item
-        key={1}
-        active={currentPage === 1}
-        onClick={() => setCurrentPage(1)}
-      >
-        1
-      </Pagination.Item>
-    );
-
-    if (currentPage > 4 && totalPages > 5) {
-      items.push(<Pagination.Ellipsis key="start-ellipsis" disabled />);
-    }
-
-    const startPage = Math.max(2, currentPage - 1);
-    const endPage = Math.min(totalPages - 1, currentPage + 1);
-    for (let pageNum = startPage; pageNum <= endPage; pageNum++) {
-      if (pageNum > 1 && pageNum < totalPages) {
-        items.push(
-          <Pagination.Item
-            key={pageNum}
-            active={currentPage === pageNum}
-            onClick={() => setCurrentPage(pageNum)}
-          >
-            {pageNum}
-          </Pagination.Item>
-        );
-      }
-    }
-
-    if (currentPage < totalPages - 3 && totalPages > 5) {
-      items.push(<Pagination.Ellipsis key="end-ellipsis" disabled />);
-    }
-
-    // 7) 항상 보이는 마지막 페이지(totalPages)
-    if (totalPages > 1) {
+    for (let page = 1; page <= totalPages; page++) {
       items.push(
         <Pagination.Item
-          key={totalPages}
-          active={currentPage === totalPages}
-          onClick={() => setCurrentPage(totalPages)}
+          key={page}
+          active={currentPage === page}
+          onClick={() => setCurrentPage(page)}
         >
-          {totalPages}
+          {page}
         </Pagination.Item>
       );
     }
 
-    // 8) Next 버튼
     items.push(
       <Pagination.Next
         key="next"
@@ -121,11 +83,11 @@ const BoardPage = () => {
 
     return <Pagination className="custom-pagination">{items}</Pagination>;
   };
-  
+
   return (
     <Container className="board-page">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2 className="text-white">게시판</h2>
+        <h2 className="text-white">Q&A</h2>
         <div className="d-flex align-items-center gap-2">
           <Form onSubmit={handleSearch} className="d-flex align-items-center gap-2">
             <input
@@ -160,13 +122,16 @@ const BoardPage = () => {
         </thead>
         <tbody>
           {currentPosts.map((post, idx) => (
-            <tr
-              key={post.id}
-              onClick={() => navigate(`/board/${post.id}`)}
-              style={{ cursor: 'pointer' }}
-            >
+            <tr key={post.id}>
               <td>{indexOfFirstPost + idx + 1}</td>
-              <td>{post.title}</td>
+              <td>
+                <span
+                  className="post-title-hover"
+                  onClick={() => navigate(`/board/${post.id}`)}
+                >
+                  {post.title}
+                </span>
+              </td>
               <td>{post.author}</td>
               <td>
                 {new Intl.DateTimeFormat('ko-KR', {

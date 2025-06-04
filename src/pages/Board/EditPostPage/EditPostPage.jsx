@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button, Container } from 'react-bootstrap';
-import authApi from '../../../utils/authApi'; // ✅ 수정된 import
+import authApi from '../../../utils/authApi';
 import './EditPostPage.style.css';
+import { toast } from 'react-toastify';
+import { jwtDecode }from 'jwt-decode'; // ✅ 추가
 
 const EditPostPage = () => {
   const { id } = useParams();
@@ -12,6 +14,16 @@ const EditPostPage = () => {
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
 
+  // ✅ 로그인 유저 확인 (디버깅용)
+  useEffect(() => {
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      console.log("🔐 현재 로그인한 사용자:", decoded.sub);
+    }
+  }, []);
+
+  // 게시글 불러오기
   useEffect(() => {
     authApi.get(`/posts/${id}`)
       .then((res) => {
@@ -32,10 +44,10 @@ const EditPostPage = () => {
 
     try {
       await authApi.put(`/posts/${id}`, updatedPost);
-      alert('게시글이 수정되었습니다!');
+      toast.success('✏️ 게시글이 수정되었습니다!');
       navigate('/board', { state: { updated: true } });
     } catch (error) {
-      alert('수정 중 오류 발생');
+      toast.error('❌ 수정 중 오류 발생');
       console.error(error);
     }
   };

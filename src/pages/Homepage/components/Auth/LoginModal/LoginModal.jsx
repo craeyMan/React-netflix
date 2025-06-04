@@ -3,6 +3,7 @@ import './LoginModal.style.css';
 import { useAuth } from '../../../../../context/AuthContext';
 import SignupPage from '../SignupPage/SignupPage';
 import authApi from '../../../../../utils/authApi';
+import { toast } from 'react-toastify';
 
 const LoginModal = () => {
   const { login, setShowLoginModal } = useAuth();
@@ -34,9 +35,9 @@ const LoginModal = () => {
         sessionStorage.setItem('token', token); // 일시 로그인
       }
 
-      login();
+      login(token, autoLogin);
+      toast.success('✅ 로그인 되었습니다!');
       setShowLoginModal(false);
-      setMessage('✅ 로그인 성공!');
     } catch (error) {
       console.error('로그인 에러:', error);
 

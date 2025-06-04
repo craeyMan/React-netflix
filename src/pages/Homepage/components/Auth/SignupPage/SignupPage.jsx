@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './SignupPage.style.css';
 import authApi from '../../../../../utils/authApi'; // ✅ 수정된 포인트
+import { toast } from 'react-toastify';
 
 const SignupPage = ({ setIsSignup }) => {
   const [formData, setFormData] = useState({
@@ -21,11 +22,6 @@ const SignupPage = ({ setIsSignup }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      alert('❌ 비밀번호가 일치하지 않습니다');
-      return;
-    }
-
     try {
       await authApi.post('/api/users/signup', {
         username: formData.username,
@@ -37,13 +33,13 @@ const SignupPage = ({ setIsSignup }) => {
         gender: formData.gender === 'male' ? '남' : '여',
       });
 
-      alert('✅ 회원가입 성공! 이제 로그인하세요.');
+      toast.success('✅ 회원가입 성공! 이제 로그인하세요.');
       setIsSignup(false);
     } catch (err) {
       if (err.response?.status === 400) {
-        alert('⚠️ 이미 존재하는 아이디입니다.');
+        toast.warn('⚠️ 이미 존재하는 아이디입니다.');
       } else {
-        alert('🚨 회원가입 중 오류가 발생했습니다.');
+        toast.error('🚨 회원가입 중 오류가 발생했습니다.');
         console.error(err);
       }
     }

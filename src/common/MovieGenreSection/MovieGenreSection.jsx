@@ -32,7 +32,7 @@ const MovieGenreSection = ({ genreId, title, onMovieClick }) => {
         autoPlaySpeed={3000}
         infinite
         responsive={responsive}
-        itemClass="carousel-item-padding"
+        itemClass="carousel-item-spacing"
         containerClass="carousel-container"
         keyBoardControl
       >

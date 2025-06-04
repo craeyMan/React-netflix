@@ -17,4 +17,8 @@
   .genre-slider-wrapper:hover .react-multiple-carousel__arrow {
     opacity: 1;
   }
+
+  .carousel-item-spacing {
+    padding-right: 3px; /* ✅ 영화 카드 사이 간격 */
+  }
   

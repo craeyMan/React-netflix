@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MovieGenreSection from '../../common/MovieGenreSection/MovieGenreSection';
 import MovieModal from '../Homepage/MovieModal/MovieModal';
+import './MoviePage.style.css'; // ✅ CSS 파일 import
 
 const genreList = [
   { id: 28, title: '액션' },
@@ -39,7 +40,7 @@ const MoviePage = () => {
   };
 
   return (
-    <div>
+    <div className="movie-page">
       {genreList.map((genre) => (
         <MovieGenreSection
           key={genre.id}

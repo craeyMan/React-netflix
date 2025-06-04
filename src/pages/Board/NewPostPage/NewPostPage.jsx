@@ -3,6 +3,8 @@ import { Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useBoard } from '../BoardContext';
 import './NewPostPage.style.css';
+import { toast } from 'react-toastify';
+
 
 const NewPostPage = () => {
   const [title, setTitle] = useState('');
@@ -22,11 +24,11 @@ const NewPostPage = () => {
 
     try {
       await addPost(newPost);
-      alert('게시글이 등록되었습니다!');
+      toast.success('📝 게시글이 등록되었습니다!');
       navigate('/board');
     } catch (error) {
       console.error('등록 실패:', error);
-      alert('등록 중 오류 발생');
+      toast.error('❌ 등록 중 오류 발생');
     }
   };
 

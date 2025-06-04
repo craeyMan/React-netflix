@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './LoginModal.style.css';
 import { useAuth } from '../../../../../context/AuthContext';
 import SignupPage from '../SignupPage/SignupPage';
-import api from '../../../../../utils/api'; 
+import authApi from '../../../../../utils/authApi'; // ✅ 수정 포인트
 
 const LoginModal = () => {
   const { login, setShowLoginModal } = useAuth();
@@ -15,20 +15,26 @@ const LoginModal = () => {
     e.preventDefault();
 
     try {
-      const response = await api.post('/api/users/login', {
+      const response = await authApi.post('/api/users/login', {
         username: id,
         password: pw,
       });
 
+      console.log('응답 확인:', response.data);
       const token = response.data.token;
-      localStorage.setItem("token", token);
+      if (!token) {
+        setMessage('⚠️ 토큰이 응답에 없습니다.');
+        return;
+      }
 
-      login(); // 로그인 상태 변경
-      setShowLoginModal(false); // 모달 닫기
-      setMessage("✅ 로그인 성공!");
-
+      localStorage.setItem('token', token);
+      login();
+      setShowLoginModal(false);
+      setMessage('✅ 로그인 성공!');
     } catch (error) {
-      if (error.response && error.response.status === 401) {
+      console.error('로그인 에러:', error);
+
+      if (error.response?.status === 401) {
         setMessage('❌ 아이디 또는 비밀번호가 올바르지 않습니다.');
       } else {
         setMessage('⚠️ 로그인 중 오류가 발생했습니다.');
@@ -54,7 +60,7 @@ const LoginModal = () => {
           <form onSubmit={handleLogin}>
             <input
               type="text"
-              placeholder="이메일 또는 아이디"
+              placeholder="아이디"
               value={id}
               onChange={(e) => setId(e.target.value)}
               required

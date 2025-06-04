@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Form } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
-import api from '../../../utils/api'; 
+import authApi from '../../../utils/authApi'; // ✅ authApi로 교체
 import './BoardPage.style.css';
 
 const BoardPage = () => {
@@ -12,7 +12,7 @@ const BoardPage = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await api.get('/posts');
+      const res = await authApi.get('/posts');
       setPosts(res.data);
     } catch (err) {
       console.error('📛 게시글 목록 불러오기 실패:', err.message);
@@ -22,7 +22,7 @@ const BoardPage = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.get(`/posts/search?keyword=${keyword}`);
+      const res = await authApi.get(`/posts/search?keyword=${keyword}`);
       setPosts(res.data);
     } catch (err) {
       console.error('📛 검색 실패:', err.message);

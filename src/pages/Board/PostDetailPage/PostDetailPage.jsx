@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Button, Container } from 'react-bootstrap';
-import api from '../../../utils/api'; 
+import authApi from '../../../utils/authApi'; // ✅ 수정됨
 import './PostDetailPage.style.css';
 
 const PostDetailPage = () => {
@@ -12,7 +12,7 @@ const PostDetailPage = () => {
   const [post, setPost] = useState(null);
 
   useEffect(() => {
-    api.get(`/posts/${id}`)
+    authApi.get(`/posts/${id}`)
       .then((res) => setPost(res.data))
       .catch(() => {
         alert('게시글을 찾을 수 없습니다.');
@@ -23,7 +23,7 @@ const PostDetailPage = () => {
   const handleDelete = async () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
-        await api.delete(`/posts/${id}`);
+        await authApi.delete(`/posts/${id}`);
         alert('삭제되었습니다!');
         navigate('/board');
       } catch (err) {
@@ -49,7 +49,7 @@ const PostDetailPage = () => {
           <div className="post-meta">
             <span className="post-author">작성자: {post.author}</span>
             <span className="post-date">
-              {new Date(post.date).toLocaleString()}
+              {new Date(post.createdAt).toLocaleString()} {/* ✅ 수정됨 */}
             </span>
           </div>
         </div>

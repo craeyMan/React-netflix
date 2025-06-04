@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button, Container } from 'react-bootstrap';
-import api from '../../../utils/api'; 
+import authApi from '../../../utils/authApi'; // ✅ 수정된 import
 import './EditPostPage.style.css';
 
 const EditPostPage = () => {
@@ -13,7 +13,7 @@ const EditPostPage = () => {
   const [author, setAuthor] = useState('');
 
   useEffect(() => {
-    api.get(`/posts/${id}`)
+    authApi.get(`/posts/${id}`)
       .then((res) => {
         const post = res.data;
         setTitle(post.title);
@@ -31,7 +31,7 @@ const EditPostPage = () => {
     const updatedPost = { title, content, author };
 
     try {
-      await api.put(`/posts/${id}`, updatedPost);
+      await authApi.put(`/posts/${id}`, updatedPost);
       alert('게시글이 수정되었습니다!');
       navigate('/board', { state: { updated: true } });
     } catch (error) {

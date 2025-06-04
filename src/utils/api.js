@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_TOKEN = process.env.REACT_APP_TMDB_BEARER;
 
-const movieApi = axios.create({
+const Api = axios.create({
   baseURL: "https://api.themoviedb.org/3",
   headers: {
     Accept: "application/json",
@@ -10,4 +10,4 @@ const movieApi = axios.create({
   },
 });
 
-export default movieApi;
+export default Api;

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import api from '../../utils/api'; // ✅ axios 대신 공통 인스턴스 사용
+import authApi from '../../utils/authApi'; // ✅ 인증 토큰 포함된 axios 인스턴스 사용
 
 const BoardContext = createContext();
 
@@ -10,7 +10,7 @@ export const BoardProvider = ({ children }) => {
 
   const fetchPosts = async () => {
     try {
-      const res = await api.get('/posts');
+      const res = await authApi.get('/posts');
       setPosts(res.data);
     } catch (err) {
       console.error('📛 게시글 불러오기 실패:', err.message);
@@ -23,8 +23,8 @@ export const BoardProvider = ({ children }) => {
 
   const addPost = async (post) => {
     try {
-      await api.post('/posts', post);
-      fetchPosts(); // 🎯 등록 후 다시 불러오기
+      await authApi.post('/posts', post);
+      fetchPosts();
     } catch (err) {
       console.error('📛 게시글 등록 실패:', err.message);
     }

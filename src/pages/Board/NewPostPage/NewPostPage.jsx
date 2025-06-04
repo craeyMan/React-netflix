@@ -1,4 +1,3 @@
-// src/pages/Board/NewPostPage/NewPostPage.jsx
 import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +9,7 @@ const NewPostPage = () => {
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
   const navigate = useNavigate();
-  const { addPost } = useBoard();
+  const { addPost } = useBoard(); // ✅ BoardContext에서 authApi를 써야 함!
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -69,3 +69,21 @@
   box-shadow: 0 0 0 2px rgba(255, 60, 60, 0.3);
   color: white;
 }
+
+.pagination .page-item .page-link {
+  background-color: black;
+  color: white;
+  border: 1px solid red;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: red;
+  color: white;
+  border: 1px solid red;
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: #330000;
+  color: white;
+  border: 1px solid red;
+}

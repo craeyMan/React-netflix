@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './LoginModal.style.css';
 import { useAuth } from '../../../../../context/AuthContext';
 import SignupPage from '../SignupPage/SignupPage';
-import authApi from '../../../../../utils/authApi'; // ✅ 수정 포인트
+import authApi from '../../../../../utils/authApi';
 
 const LoginModal = () => {
   const { login, setShowLoginModal } = useAuth();
@@ -10,6 +10,7 @@ const LoginModal = () => {
   const [pw, setPw] = useState('');
   const [isSignup, setIsSignup] = useState(false);
   const [message, setMessage] = useState('');
+  const [autoLogin, setAutoLogin] = useState(false); // ✅ 자동 로그인 체크 상태
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,14 +21,19 @@ const LoginModal = () => {
         password: pw,
       });
 
-      console.log('응답 확인:', response.data);
       const token = response.data.token;
       if (!token) {
         setMessage('⚠️ 토큰이 응답에 없습니다.');
         return;
       }
 
-      localStorage.setItem('token', token);
+      // ✅ 자동 로그인 여부에 따라 저장소 분기
+      if (autoLogin) {
+        localStorage.setItem('token', token); // 자동 로그인 유지
+      } else {
+        sessionStorage.setItem('token', token); // 일시 로그인
+      }
+
       login();
       setShowLoginModal(false);
       setMessage('✅ 로그인 성공!');
@@ -58,21 +64,36 @@ const LoginModal = () => {
         <div className="login-modal-content">
           <h2>로그인</h2>
           <form onSubmit={handleLogin}>
+          <input
+            type="text"
+            placeholder="아이디"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+            required
+            name="login_id"
+            autoComplete="off"
+          />
+          <input
+            type="password"
+            placeholder="비밀번호"
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
+            required
+            name="login_pw"
+            autoComplete="new-password"
+          />
+
+          <div className="checkbox-wrapper">
             <input
-              type="text"
-              placeholder="아이디"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
-              required
+              type="checkbox"
+              id="auto-login"
+              checked={autoLogin}
+              onChange={() => setAutoLogin(!autoLogin)}
             />
-            <input
-              type="password"
-              placeholder="비밀번호"
-              value={pw}
-              onChange={(e) => setPw(e.target.value)}
-              required
-            />
-            <button type="submit" className="login-button">로그인</button>
+            <label htmlFor="auto-login">자동 로그인</label>
+          </div>
+
+          <button type="submit" className="login-button">로그인</button>
           </form>
 
           {message && <p className="login-message">{message}</p>}

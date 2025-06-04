@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Table, Button, Form } from 'react-bootstrap';
+import { Container, Table, Button, Form, Pagination } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
-import authApi from '../../../utils/authApi'; // ✅ authApi로 교체
+import authApi from '../../../utils/authApi';
 import './BoardPage.style.css';
 
 const BoardPage = () => {
   const [posts, setPosts] = useState([]);
   const [keyword, setKeyword] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 10;
+
   const navigate = useNavigate();
   const location = useLocation();
 
   const fetchPosts = async () => {
     try {
       const res = await authApi.get('/posts');
-      setPosts(res.data);
+      setPosts(res.data.reverse()); // 최신글이 위로 오게
     } catch (err) {
       console.error('📛 게시글 목록 불러오기 실패:', err.message);
     }
@@ -23,7 +26,8 @@ const BoardPage = () => {
     e.preventDefault();
     try {
       const res = await authApi.get(`/posts/search?keyword=${keyword}`);
-      setPosts(res.data);
+      setPosts(res.data.reverse());
+      setCurrentPage(1); // 검색 시 페이지 초기화
     } catch (err) {
       console.error('📛 검색 실패:', err.message);
     }
@@ -40,6 +44,84 @@ const BoardPage = () => {
     }
   }, [location.state]);
 
+  // 페이징 계산
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(posts.length / postsPerPage);
+
+  const renderPagination = () => {
+    if (totalPages <= 1) return null;
+
+    const items = [];
+
+    items.push(
+      <Pagination.Prev
+        key="prev"
+        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        disabled={currentPage === 1}
+      />
+    );
+
+    items.push(
+      <Pagination.Item
+        key={1}
+        active={currentPage === 1}
+        onClick={() => setCurrentPage(1)}
+      >
+        1
+      </Pagination.Item>
+    );
+
+    if (currentPage > 4 && totalPages > 5) {
+      items.push(<Pagination.Ellipsis key="start-ellipsis" disabled />);
+    }
+
+    const startPage = Math.max(2, currentPage - 1);
+    const endPage = Math.min(totalPages - 1, currentPage + 1);
+    for (let pageNum = startPage; pageNum <= endPage; pageNum++) {
+      if (pageNum > 1 && pageNum < totalPages) {
+        items.push(
+          <Pagination.Item
+            key={pageNum}
+            active={currentPage === pageNum}
+            onClick={() => setCurrentPage(pageNum)}
+          >
+            {pageNum}
+          </Pagination.Item>
+        );
+      }
+    }
+
+    if (currentPage < totalPages - 3 && totalPages > 5) {
+      items.push(<Pagination.Ellipsis key="end-ellipsis" disabled />);
+    }
+
+    // 7) 항상 보이는 마지막 페이지(totalPages)
+    if (totalPages > 1) {
+      items.push(
+        <Pagination.Item
+          key={totalPages}
+          active={currentPage === totalPages}
+          onClick={() => setCurrentPage(totalPages)}
+        >
+          {totalPages}
+        </Pagination.Item>
+      );
+    }
+
+    // 8) Next 버튼
+    items.push(
+      <Pagination.Next
+        key="next"
+        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+        disabled={currentPage === totalPages}
+      />
+    );
+
+    return <Pagination className="custom-pagination">{items}</Pagination>;
+  };
+  
   return (
     <Container className="board-page">
       <div className="d-flex justify-content-between align-items-center mb-3">
@@ -53,7 +135,9 @@ const BoardPage = () => {
               onChange={(e) => setKeyword(e.target.value)}
               className="common-input"
             />
-            <Button type="submit" className="outline-red-btn ms-2">검색</Button>
+            <Button type="submit" className="outline-red-btn ms-2">
+              검색
+            </Button>
           </Form>
           <Button
             variant="primary"
@@ -75,13 +159,13 @@ const BoardPage = () => {
           </tr>
         </thead>
         <tbody>
-          {posts.map((post, idx) => (
+          {currentPosts.map((post, idx) => (
             <tr
               key={post.id}
               onClick={() => navigate(`/board/${post.id}`)}
               style={{ cursor: 'pointer' }}
             >
-              <td>{idx + 1}</td>
+              <td>{indexOfFirstPost + idx + 1}</td>
               <td>{post.title}</td>
               <td>{post.author}</td>
               <td>
@@ -99,6 +183,10 @@ const BoardPage = () => {
           ))}
         </tbody>
       </Table>
+
+      <div className="d-flex justify-content-center mt-3">
+        {renderPagination()}
+      </div>
     </Container>
   );
 };

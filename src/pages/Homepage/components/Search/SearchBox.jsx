@@ -7,14 +7,14 @@ const SearchBox = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 🔥 경로가 검색이 아닐 때 keyword 리셋
+  // 경로가 검색이 아닐 때 keyword 리셋
   useEffect(() => {
     if (!location.pathname.startsWith('/movies/search')) {
       setKeyword('');
     }
   }, [location.pathname]);
 
-  // 🔁 keyword 변경 시 검색 수행
+  // keyword 변경 시 검색 수행
   useEffect(() => {
     const delay = setTimeout(() => {
       if (keyword.trim().length > 0) {

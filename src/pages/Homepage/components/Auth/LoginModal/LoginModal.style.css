@@ -40,6 +40,14 @@
   color: #aaa;
 }
 
+.login-modal-content input:-webkit-autofill {
+  background-color: #333 !important;
+  -webkit-box-shadow: 0 0 0 1000px #333 inset;
+  -webkit-text-fill-color: white;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+
 .login-button {
   width: 100%;
   padding: 12px;
@@ -47,7 +55,7 @@
   border: none;
   border-radius: 4px;
   background-color: #e50914;
-  color: white;
+  color: #aaa;
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 1rem;
@@ -79,4 +87,29 @@
 
 .close-button:hover {
   color: #fff;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;         /* ✅ 세로 정렬 */
+  gap: 8px;
+  margin-bottom: 1rem;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: 1px;                    /* ✅ 줄 살짝 맞추기 위한 미세 위치 조정 */
+  accent-color: red;
+}
+
+.checkbox-wrapper label {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
 }

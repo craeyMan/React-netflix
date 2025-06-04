@@ -78,26 +78,24 @@ const SearchPage = () => {
         <p>검색 결과가 없습니다.</p>
       )}
 
-      <ReactPaginate
-        nextLabel="next >"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={3}
-        marginPagesDisplayed={2}
-        pageCount={Math.min(data?.total_pages || 0, 20)}
-        previousLabel="< previous"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        previousClassName="page-item"
-        previousLinkClassName="page-link"
-        nextClassName="page-item"
-        nextLinkClassName="page-link"
-        breakLabel="..."
-        breakClassName="page-item"
-        breakLinkClassName="page-link"
-        containerClassName="pagination justify-content-center mt-4"
-        activeClassName="active"
-        forcePage={page - 1}
-      />
+<ReactPaginate
+  previousLabel="‹"      
+  nextLabel="›"          
+  breakLabel="..."
+  onPageChange={handlePageClick}
+  pageCount={Math.min(data?.total_pages || 0, 20)}
+  forcePage={page - 1}
+  containerClassName="pagination justify-content-center mt-4"
+  pageClassName="page-item"
+  pageLinkClassName="page-link"
+  previousClassName="page-item"
+  previousLinkClassName="page-link"
+  nextClassName="page-item"
+  nextLinkClassName="page-link"
+  breakClassName="page-item"
+  breakLinkClassName="page-link"
+  activeClassName="active"
+/>
 
       {selectedMovie && (
         <MovieModal

@@ -17,12 +17,12 @@ const MovieModal = ({ show, onClose, handleClose, movie }) => {
     const fetchData = async () => {
       try {
         const [creditsRes, videoRes, detailRes, releaseDatesRes] = await Promise.all([
-          api.get(`/movie/${movie.id}/credits`, {
-            params: { language: 'ko-KR' },
-          }),
-          api.get(`/movie/${movie.id}/videos`, {
-            params: { language: 'ko-KR' },
-          }),
+          api.get(`/movie/${movie.id}/credits` 
+            
+          ),
+          api.get(`/movie/${movie.id}/videos` 
+            
+          ),
           api.get(`/movie/${movie.id}`),
           api.get(`/movie/${movie.id}/release_dates`),
         ]);

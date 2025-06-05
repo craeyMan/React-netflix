@@ -56,38 +56,59 @@ const EditPostPage = () => {
     <Container className="edit-post-page">
       <h2>게시글 수정</h2>
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>제목</Form.Label>
-          <Form.Control
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            maxLength={15}
-            className="custom-input"
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>작성자</Form.Label>
-          <Form.Control
-            type="text"
-            value={author}
-            disabled
-            className="custom-input"
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>내용</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={6}
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-            className="custom-input"
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
+      <Form.Group className="mb-3" style={{ position: 'relative' }}>
+        <Form.Label>제목</Form.Label>
+        <Form.Control
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+          maxLength={10}
+          className="custom-input"
+        />
+        <div style={{
+          position: 'absolute',
+          right: '10px',
+          bottom: '-20px',
+          fontSize: '0.85rem',
+          color: '#aaa'
+        }}>
+          {title.length}/10자
+        </div>
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>작성자</Form.Label>
+        <Form.Control
+          type="text"
+          value={author}
+          disabled
+          className="custom-input"
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3" style={{ position: 'relative' }}>
+        <Form.Label>내용</Form.Label>
+        <Form.Control
+          as="textarea"
+          rows={6}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          required
+          maxLength={500}
+          className="custom-input"
+        />
+        <div style={{
+          position: 'absolute',
+          right: '10px',
+          bottom: '-20px',
+          fontSize: '0.85rem',
+          color: '#aaa'
+        }}>
+          {content.length}/500자
+        </div>
+      </Form.Group>
+        <Button className="outline-red-btn" type="submit">
           저장하기
         </Button>
       </Form>

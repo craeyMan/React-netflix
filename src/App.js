@@ -16,6 +16,7 @@ import { BoardProvider } from './pages/Board/BoardContext';
 import EditPostPage from './pages/Board/EditPostPage/EditPostPage';
 import { AuthProvider } from './context/AuthContext';
 import SignupPage from './pages/Homepage/components/Auth/SignupPage/SignupPage';
+import LogoutPage from './pages/Homepage/components/Auth/Logout/LogoutPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -45,7 +46,7 @@ function App() {
             </Route>
 
             <Route path="/signup" element={<SignupPage />} />
-
+            <Route path="/logout" element={<LogoutPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
 

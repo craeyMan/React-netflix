@@ -31,3 +31,21 @@
     color: white;
     opacity: 1;
   }
+
+  .outline-red-btn {
+    border: 1px solid #ff3c3c;
+    background-color: transparent;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  /* ✅ hover 시 스타일 */
+  .outline-red-btn:hover {
+    background-color: #ff3c3c;
+    color: black;
+    cursor: pointer;
+  }

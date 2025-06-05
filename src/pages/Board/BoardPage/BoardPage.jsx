@@ -3,6 +3,8 @@ import { Container, Table, Button, Form, Pagination } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import authApi from '../../../utils/authApi';
 import './BoardPage.style.css';
+import { useAuth } from '../../../context/AuthContext'; 
+
 
 const BoardPage = () => {
   const [posts, setPosts] = useState([]);
@@ -10,6 +12,7 @@ const BoardPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 10;
 
+  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -34,8 +37,10 @@ const BoardPage = () => {
   };
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    if (isLoggedIn) {
+      fetchPosts();
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if (location.state?.updated) {
@@ -87,7 +92,7 @@ const BoardPage = () => {
   return (
     <Container className="board-page">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2 className="text-white">Q&A</h2>
+        <h2 className="text-white"></h2>
         <div className="d-flex align-items-center gap-2">
           <Form onSubmit={handleSearch} className="d-flex align-items-center gap-2">
             <input

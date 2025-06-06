@@ -5,6 +5,7 @@ import authApi from '../../../utils/authApi';
 import './PostDetailPage.style.css';
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
+import CommentSection from '../Comment/CommentSection';
 
 const PostDetailPage = () => {
   const { id } = useParams();
@@ -14,28 +15,27 @@ const PostDetailPage = () => {
   const [post, setPost] = useState(null);
   const [canEdit, setCanEdit] = useState(false);
 
+  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  const decoded = token ? jwtDecode(token) : null;
+  const username = decoded?.sub || '';
+  const role = decoded?.role || '';
+
   useEffect(() => {
     authApi.get(`/posts/${id}`)
       .then((res) => {
         setPost(res.data);
-
-        // ✅ JWT에서 로그인한 사용자와 작성자 비교
-        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-        if (token) {
-          try {
-            const decoded = jwtDecode(token);
-            const username = decoded.sub || decoded.username; // 실제 subject 설정에 따라 변경
-            if (username === res.data.author) {
-              setCanEdit(true);
-            }
-          } catch (e) {
-            console.error('토큰 디코딩 실패:', e);
-          }
+        if (username && username === res.data.author) {
+          setCanEdit(true);
         }
       })
-      .catch(() => {
-        alert('게시글을 찾을 수 없습니다.');
-        navigate('/board');
+      .catch((err) => {
+        if (err.response?.status === 403) {
+          toast.warn('🔒 비밀글입니다.');
+          navigate('/board');
+        } else {
+          alert('게시글을 찾을 수 없습니다.');
+          navigate('/board');
+        }
       });
   }, [id, location.key]);
 
@@ -94,6 +94,14 @@ const PostDetailPage = () => {
           </>
         )}
       </div>
+
+      {/* ✅ 댓글 섹션 props 전달 */}
+      <CommentSection
+        postId={post.id}
+        postTitle={post.title}
+        postAuthor={post.author}
+        isSecret={post.isSecret}
+      />
     </Container>
   );
 };

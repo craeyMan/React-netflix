@@ -83,3 +83,9 @@
   background-color: #ff3c3c;
   color: white;
 }
+
+.comment-button {
+  margin-left: auto;
+  display: block;
+  align-self: flex-end;
+}

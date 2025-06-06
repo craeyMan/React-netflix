@@ -3,8 +3,7 @@ import { Container, Table, Button, Form, Pagination } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router-dom';
 import authApi from '../../../utils/authApi';
 import './BoardPage.style.css';
-import { useAuth } from '../../../context/AuthContext'; 
-
+import { useAuth } from '../../../context/AuthContext';
 
 const BoardPage = () => {
   const [posts, setPosts] = useState([]);
@@ -119,7 +118,7 @@ const BoardPage = () => {
       <Table striped bordered hover responsive className="board-table">
         <thead>
           <tr>
-            <th>#</th>
+            <th>No</th>
             <th>제목</th>
             <th>작성자</th>
             <th>작성일</th>
@@ -132,9 +131,26 @@ const BoardPage = () => {
               <td>
                 <span
                   className="post-title-hover"
-                  onClick={() => navigate(`/board/${post.id}`)}
+                  onClick={() => {
+                    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+                    if (!token) return;
+
+                    const { sub: username, role } = JSON.parse(atob(token.split('.')[1]));
+                    const isAdmin = role === 'ADMIN';
+                    const isAuthor = post.author === username;
+
+                    if (post.isSecret && !isAdmin && !isAuthor) {
+                      alert('🔒 비밀글입니다.');
+                      return;
+                    }
+
+                    navigate(`/board/${post.id}`);
+                  }}
                 >
                   {post.title}
+                  {post.isSecret && (
+                    <span style={{ marginLeft: '6px', color: 'red' }}>🔒</span>
+                  )}
                 </span>
               </td>
               <td>{post.author}</td>

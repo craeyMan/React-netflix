@@ -13,7 +13,7 @@ const TopRatedMovieSlide = ({ onMovieClick }) => {
 
   return (
     <MovieSlider
-      title="Top Rated Movies"
+      title="평점 높은 영화"
       movies={data?.results}
       onMovieClick={onMovieClick} // ✅ 여기서도 넘김
       responsive={{

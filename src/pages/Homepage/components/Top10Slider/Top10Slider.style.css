@@ -71,3 +71,7 @@
 .top10-carousel-container:hover .react-multiple-carousel__arrow {
   opacity: 1 ;
 }
+
+.icon.liked {
+  color: red;
+}

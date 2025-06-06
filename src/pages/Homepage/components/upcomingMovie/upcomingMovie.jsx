@@ -20,7 +20,7 @@ const UpcomingMovie = ({ onMovieClick }) => {
 
   return (
     <div className="Upcoming-slider-wrapper">
-      <h3>Upcoming Movies</h3>
+      <h3>개봉 예정 영화</h3>
       <Carousel
         infinite={true}
         centerMode={false}

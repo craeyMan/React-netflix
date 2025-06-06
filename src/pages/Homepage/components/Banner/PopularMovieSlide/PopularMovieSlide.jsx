@@ -18,7 +18,7 @@ const PopularMovieSlide = ({onMovieClick}) => {
     return (
     <div>
         <MovieSlider 
-        title="Popular Movies" 
+        title="인기 영화" 
         movies={data.results} 
         responsive={responsive}
         onMovieClick={onMovieClick} 

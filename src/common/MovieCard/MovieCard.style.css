@@ -35,7 +35,7 @@
     padding: 12px;
     transform: translateY(100%);
     opacity: 0;
-    transition: all 2.5s ease;
+    transition: all 1.5s ease;
   }
   
   .movie-card:hover .movie-overlay {
@@ -61,7 +61,7 @@
     align-items: center;
   }
   
-  .liked {
+  .icon.liked {
     color: red;
   }
   

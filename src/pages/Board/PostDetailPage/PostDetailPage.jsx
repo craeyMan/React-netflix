@@ -18,7 +18,9 @@ const PostDetailPage = () => {
   const token = localStorage.getItem('token') || sessionStorage.getItem('token');
   const decoded = token ? jwtDecode(token) : null;
   const username = decoded?.sub || '';
-  const role = decoded?.role || ''; // ✅ "ROLE_ADMIN" 형태여야 함
+  const role = decoded?.role || ''; // "ADMIN" 또는 "USER"
+
+  const isAdmin = role === 'ADMIN';
 
   useEffect(() => {
     if (!token) {
@@ -29,19 +31,17 @@ const PostDetailPage = () => {
 
     authApi.get(`/posts/${id}`)
       .then((res) => {
-        setPost(res.data);
+        const fetchedPost = res.data;
 
-        // ✅ 비밀글이 아닌 경우 or 관리자 or 작성자면 보여줌
-        if (!res.data.isSecret || username === res.data.author || role === 'ROLE_ADMIN') {
-          setPost(res.data);
+        const isAuthor = username === fetchedPost.author;
+
+        // ✅ 비밀글 접근 조건
+        if (!fetchedPost.isSecret || isAuthor || isAdmin) {
+          setPost(fetchedPost);
+          if (isAuthor) setCanEdit(true); // 수정은 작성자만
         } else {
           toast.warn('🔒 비밀글 접근 권한이 없습니다.');
           navigate('/board');
-        }
-
-        // ✅ 수정 버튼 조건
-        if (username === res.data.author || role === 'ROLE_ADMIN') {
-          setCanEdit(true);
         }
       })
       .catch((err) => {

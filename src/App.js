@@ -1,11 +1,9 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import MovieDetailPage from './pages/MovieDetail/MovieDetailPage';
 import MoviePage from './pages/Movies/MoviePage';
 import SearchPage from './pages/SearchPage/SearchPage';
 import AppLayout from './layout/AppLayout';
 import Homepage from './pages/Homepage/Homepage';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Footer from './pages/Homepage/components/Footer/Footer';
@@ -34,7 +32,6 @@ function App() {
               <Route path="movies">
                 <Route index element={<MoviePage />} />
                 <Route path="search" element={<SearchPage />} />
-                <Route path=":id" element={<MovieDetailPage />} />
               </Route>
 
               <Route path="board">
@@ -47,7 +44,6 @@ function App() {
 
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/logout" element={<LogoutPage />} />
-            <Route path="*" element={<NotFoundPage />} />
           </Routes>
 
           <Footer />

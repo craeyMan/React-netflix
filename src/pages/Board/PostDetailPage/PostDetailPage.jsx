@@ -18,24 +18,35 @@ const PostDetailPage = () => {
   const token = localStorage.getItem('token') || sessionStorage.getItem('token');
   const decoded = token ? jwtDecode(token) : null;
   const username = decoded?.sub || '';
-  const role = decoded?.role || '';
+  const role = decoded?.role || ''; // ✅ "ROLE_ADMIN" 형태여야 함
 
   useEffect(() => {
+    if (!token) {
+      toast.warn('로그인이 필요합니다.');
+      navigate('/login');
+      return;
+    }
+
     authApi.get(`/posts/${id}`)
       .then((res) => {
         setPost(res.data);
-        if (username && username === res.data.author) {
+
+        // ✅ 비밀글이 아닌 경우 or 관리자 or 작성자면 보여줌
+        if (!res.data.isSecret || username === res.data.author || role === 'ROLE_ADMIN') {
+          setPost(res.data);
+        } else {
+          toast.warn('🔒 비밀글 접근 권한이 없습니다.');
+          navigate('/board');
+        }
+
+        // ✅ 수정 버튼 조건
+        if (username === res.data.author || role === 'ROLE_ADMIN') {
           setCanEdit(true);
         }
       })
       .catch((err) => {
-        if (err.response?.status === 403) {
-          toast.warn('🔒 비밀글입니다.');
-          navigate('/board');
-        } else {
-          alert('게시글을 찾을 수 없습니다.');
-          navigate('/board');
-        }
+        toast.error('❌ 게시글을 불러오지 못했습니다.');
+        navigate('/board');
       });
   }, [id, location.key]);
 
@@ -64,7 +75,9 @@ const PostDetailPage = () => {
     <Container className="post-detail-page">
       <div className="post-box">
         <div className="post-header-row">
-          <h2 className="post-title">{post.title}</h2>
+          <h2 className="post-title">
+            {post.isSecret ? '🔒 ' : ''}{post.title}
+          </h2>
           <div className="post-meta">
             <span className="post-author">작성자: {post.author}</span>
             <span className="post-date">
@@ -95,7 +108,7 @@ const PostDetailPage = () => {
         )}
       </div>
 
-      {/* ✅ 댓글 섹션 props 전달 */}
+      {/* ✅ 댓글 섹션 */}
       <CommentSection
         postId={post.id}
         postTitle={post.title}

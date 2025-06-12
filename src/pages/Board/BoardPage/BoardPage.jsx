@@ -135,8 +135,18 @@ const BoardPage = () => {
                     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
                     if (!token) return;
 
-                    const { sub: username, role } = JSON.parse(atob(token.split('.')[1]));
-                    const isAdmin = role === 'ADMIN';
+                    let username = '';
+                    let role = '';
+                    try {
+                      const decoded = JSON.parse(atob(token.split('.')[1]));
+                      username = decoded.sub;
+                      role = decoded.role;
+                    } catch (e) {
+                      alert('토큰 정보 확인 실패');
+                      return;
+                    }
+
+                    const isAdmin = role?.toUpperCase().includes('ADMIN');
                     const isAuthor = post.author === username;
 
                     if (post.isSecret && !isAdmin && !isAuthor) {

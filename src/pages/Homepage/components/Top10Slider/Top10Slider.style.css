@@ -1,4 +1,3 @@
-
 .top10-title {
   color: white;
   font-size: 2rem;
@@ -29,7 +28,7 @@
   height: 210px;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s ease;
 }
 
@@ -64,12 +63,12 @@
 }
 
 .top10-carousel-container .react-multiple-carousel__arrow {
-  opacity: 0 ;
+  opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
 
 .top10-carousel-container:hover .react-multiple-carousel__arrow {
-  opacity: 1 ;
+  opacity: 1;
 }
 
 .icon.liked {

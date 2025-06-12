@@ -3,38 +3,36 @@ import './MovieCard.style.css';
 import { FaPlay, FaThumbsUp, FaChevronDown } from 'react-icons/fa';
 import { useMovieGenreQuery } from '../../hooks/useMovieGenre';
 import { Badge } from 'react-bootstrap';
-import { useAuth } from '../../context/AuthContext'; // ✅ 로그인 확인용
-import authApi from '../../utils/authApi'; // ✅ JWT 요청용 axios
+import { useAuth } from '../../context/AuthContext';
+import authApi from '../../utils/authApi';
 
 const MovieCard = ({ movie, onMovieClick }) => {
   const [liked, setLiked] = useState(false);
   const { isLoggedIn } = useAuth();
 
-  // ✅ 초기 좋아요 상태 확인
   useEffect(() => {
     const checkLiked = async () => {
       try {
         const res = await authApi.get(`/likes/${movie.id}`);
-        setLiked(res.data.liked); // 백엔드에서 true/false 반환
+        setLiked(res.data.liked);
       } catch (err) {
         console.error('좋아요 상태 조회 실패:', err.message);
       }
     };
-  
     checkLiked();
   }, [movie.id]);
-  
+
   const handleLike = async () => {
     if (!isLoggedIn) {
       alert('로그인 후 이용 가능합니다.');
       return;
     }
-  
+
     try {
       if (!liked) {
-        await authApi.post('/likes', { movieId: movie.id });
+        await authApi.post('/likes', { movieId: movie.id }); 
       } else {
-        await authApi.delete(`/likes/${movie.id}`);
+        await authApi.delete(`/likes/${movie.id}`); 
       }
       setLiked(!liked);
     } catch (err) {

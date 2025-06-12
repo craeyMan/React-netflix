@@ -20,7 +20,7 @@ const BoardPage = () => {
       const res = await authApi.get('/posts');
       setPosts(res.data.reverse());
     } catch (err) {
-      console.error('📛 게시글 목록 불러오기 실패:', err.message);
+      // 에러 처리 시 UI 알림 등을 사용할 수 있음
     }
   };
 
@@ -31,7 +31,7 @@ const BoardPage = () => {
       setPosts(res.data.reverse());
       setCurrentPage(1);
     } catch (err) {
-      console.error('📛 검색 실패:', err.message);
+      // 에러 처리 시 UI 알림 등을 사용할 수 있음
     }
   };
 
@@ -150,7 +150,7 @@ const BoardPage = () => {
                     const isAuthor = post.author === username;
 
                     if (post.isSecret && !isAdmin && !isAuthor) {
-                      alert('🔒 비밀글입니다.');
+                      alert('비밀글입니다.');
                       return;
                     }
 

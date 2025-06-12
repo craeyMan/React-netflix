@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './SignupPage.style.css';
-import authApi from '../../../../../utils/authApi'; // ✅ 수정된 포인트
+import authApi from '../../../../../utils/authApi';
 import { toast } from 'react-toastify';
 
 const SignupPage = ({ setIsSignup }) => {
@@ -40,7 +40,6 @@ const SignupPage = ({ setIsSignup }) => {
         toast.warn('⚠️ 이미 존재하는 아이디입니다.');
       } else {
         toast.error('🚨 회원가입 중 오류가 발생했습니다.');
-        console.error(err);
       }
     }
   };

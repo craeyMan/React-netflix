@@ -15,10 +15,7 @@ const CommentSection = ({ postId, postTitle, postAuthor, isSecret }) => {
   const isAdmin = role === 'ADMIN';
   const isAuthor = username === postAuthor;
 
-  // ✅ 보기 권한: 공개글이거나 작성자 또는 관리자
   const canView = !isSecret || isAuthor || isAdmin;
-
-  // ✅ 작성 권한: 작성자 또는 관리자
   const canWrite = isAuthor || isAdmin;
 
   useEffect(() => {
@@ -31,9 +28,7 @@ const CommentSection = ({ postId, postTitle, postAuthor, isSecret }) => {
     try {
       const res = await authApi.get(`/api/comments/${postId}`);
       setComments(res.data || []);
-    } catch (err) {
-      console.error('❌ 댓글 불러오기 실패:', err);
-    }
+    } catch (err) {}
   };
 
   const handleSubmit = async (e) => {
@@ -48,18 +43,14 @@ const CommentSection = ({ postId, postTitle, postAuthor, isSecret }) => {
       });
       setContent('');
       await fetchComments();
-    } catch (err) {
-      console.error('❌ 댓글 작성 실패:', err);
-    }
+    } catch (err) {}
   };
 
   const handleDelete = async (commentId) => {
     try {
       await authApi.delete(`/api/comments/${commentId}`);
       await fetchComments();
-    } catch (err) {
-      console.error('❌ 댓글 삭제 실패:', err);
-    }
+    } catch (err) {}
   };
 
   return (

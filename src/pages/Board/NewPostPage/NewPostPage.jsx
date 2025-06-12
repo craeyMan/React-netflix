@@ -11,7 +11,7 @@ const NewPostPage = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
-  const [isSecret, setIsSecret] = useState(false); // ✅ 비밀글 여부
+  const [isSecret, setIsSecret] = useState(false);
   const navigate = useNavigate();
   const { addPost } = useBoard();
   const { isLoggedIn } = useAuth();
@@ -22,9 +22,7 @@ const NewPostPage = () => {
       try {
         const decoded = jwtDecode(token);
         setAuthor(decoded.sub);
-      } catch (e) {
-        console.error('JWT 디코딩 실패:', e);
-      }
+      } catch (e) {}
     }
   }, []);
 
@@ -45,17 +43,14 @@ const NewPostPage = () => {
       title,
       content,
       author,
-      isSecret, // ✅ 서버로 전송
+      isSecret,
     };
-
-    console.log('🚀 newPost payload:', newPost);
 
     try {
       await addPost(newPost);
       toast.success('📝 게시글이 등록되었습니다!');
       navigate('/board');
-    } catch (error) {
-      console.error('등록 실패:', error);
+    } catch {
       toast.error('❌ 등록 중 오류 발생');
     }
   };
@@ -117,7 +112,6 @@ const NewPostPage = () => {
           </div>
         </Form.Group>
 
-        {/* ✅ 비밀글 체크박스 */}
         <Form.Group controlId="isSecret" className="mb-3">
           <Form.Check
             type="checkbox"

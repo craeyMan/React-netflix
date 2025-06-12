@@ -18,8 +18,7 @@ const PostDetailPage = () => {
   const token = localStorage.getItem('token') || sessionStorage.getItem('token');
   const decoded = token ? jwtDecode(token) : null;
   const username = decoded?.sub || '';
-  const role = decoded?.role || ''; // "ADMIN" 또는 "USER"
-
+  const role = decoded?.role || '';
   const isAdmin = role === 'ADMIN';
 
   useEffect(() => {
@@ -32,20 +31,18 @@ const PostDetailPage = () => {
     authApi.get(`/posts/${id}`)
       .then((res) => {
         const fetchedPost = res.data;
-
         const isAuthor = username === fetchedPost.author;
 
-        // ✅ 비밀글 접근 조건
         if (!fetchedPost.isSecret || isAuthor || isAdmin) {
           setPost(fetchedPost);
-          if (isAuthor) setCanEdit(true); // 수정은 작성자만
+          if (isAuthor) setCanEdit(true);
         } else {
-          toast.warn('🔒 비밀글 접근 권한이 없습니다.');
+          toast.warn('비밀글 접근 권한이 없습니다.');
           navigate('/board');
         }
       })
-      .catch((err) => {
-        toast.error('❌ 게시글을 불러오지 못했습니다.');
+      .catch(() => {
+        toast.error('게시글을 불러오지 못했습니다.');
         navigate('/board');
       });
   }, [id, location.key]);
@@ -56,9 +53,8 @@ const PostDetailPage = () => {
         await authApi.delete(`/posts/${id}`);
         toast.success('🗑️ 게시글이 삭제되었습니다!');
         navigate('/board');
-      } catch (err) {
-        toast.error('❌ 삭제 중 오류 발생');
-        console.error(err);
+      } catch {
+        toast.error('삭제 중 오류 발생');
       }
     }
   };
@@ -108,7 +104,6 @@ const PostDetailPage = () => {
         )}
       </div>
 
-      {/* ✅ 댓글 섹션 */}
       <CommentSection
         postId={post.id}
         postTitle={post.title}

@@ -8,7 +8,7 @@ import { Badge } from 'react-bootstrap';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './Top10Slider.style.css';
-import { useAuth } from '../../../../context/AuthContext'; // ✅ 로그인 체크
+import { useAuth } from '../../../../context/AuthContext';
 
 const responsive = {
   desktop: { breakpoint: { max: 3000, min: 1024 }, items: 7 },
@@ -18,10 +18,10 @@ const responsive = {
 
 const Top10Slider = ({ onMovieClick }) => {
   const [topMovies, setTopMovies] = useState([]);
-  const [likedMap, setLikedMap] = useState({}); // ✅ 영화별 좋아요 상태 저장
+  const [likedMap, setLikedMap] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { isLoggedIn } = useAuth(); // ✅ 로그인 확인
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     const fetchTop10 = async () => {
@@ -35,20 +35,17 @@ const Top10Slider = ({ onMovieClick }) => {
         );
         setTopMovies(movieDetails);
 
-        // ✅ 좋아요 상태 미리 불러오기
         const likedStatus = {};
         for (const movie of movieDetails) {
           try {
             const res = await authApi.get(`/likes/${movie.id}`);
             likedStatus[movie.id] = res.data.liked;
-          } catch (e) {
+          } catch {
             likedStatus[movie.id] = false;
           }
         }
         setLikedMap(likedStatus);
-
-      } catch (err) {
-        console.error(err);
+      } catch {
         setError('Top10 데이터를 불러오는 중 오류가 발생했습니다.');
       } finally {
         setLoading(false);
@@ -72,9 +69,7 @@ const Top10Slider = ({ onMovieClick }) => {
         await authApi.post(`/likes`, { movieId });
       }
       setLikedMap((prev) => ({ ...prev, [movieId]: !isLiked }));
-    } catch (err) {
-      console.error('좋아요 처리 실패:', err.message);
-    }
+    } catch {}
   };
 
   if (loading) return <Spinner />;
@@ -82,9 +77,7 @@ const Top10Slider = ({ onMovieClick }) => {
 
   return (
     <div className="top10-slider-wrapper">
-      <h2 className="top10-title">
-        🔥 실시간 인기 <span className="highlight">Top 10</span>
-      </h2>
+      <h2 className="top10-title">Top 10</h2>
       <Carousel
         responsive={responsive}
         infinite

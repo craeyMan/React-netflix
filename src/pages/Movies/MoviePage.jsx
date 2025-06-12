@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MovieGenreSection from '../../common/MovieGenreSection/MovieGenreSection';
 import MovieModal from '../Homepage/MovieModal/MovieModal';
-import './MoviePage.style.css'; // ✅ CSS 파일 import
+import './MoviePage.style.css'; 
 
 const genreList = [
   { id: 28, title: '액션' },

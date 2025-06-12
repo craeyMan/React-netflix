@@ -8,12 +8,7 @@ import MovieModal from '../Homepage/MovieModal/MovieModal';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './SearchPage.style.css';
-
-const responsive = {
-  desktop: { breakpoint: { max: 3000, min: 1024 }, items: 7 },
-  tablet: { breakpoint: { max: 1024, min: 768 }, items: 5 },
-  mobile: { breakpoint: { max: 768, min: 0 }, items: 3 },
-};
+import { responsive } from '../../constants/responsive';
 
 const SearchPage = () => {
   const [query] = useSearchParams();

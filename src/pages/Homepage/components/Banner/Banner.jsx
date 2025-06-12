@@ -5,7 +5,7 @@ import MovieModal from '../../MovieModal/MovieModal';
 import { usePopularMoviesQuery } from '../../../../hooks/usePopularMovies';
 import './Banner.style.css';
 import Spinner from '../Spinner/Spinner';
-import api from '../../../../utils/api'; 
+import api from '../../../../utils/api';
 
 const Banner = () => {
   const { data, isLoading, isError, error } = usePopularMoviesQuery();
@@ -25,9 +25,7 @@ const Banner = () => {
       for (const movie of shuffled) {
         try {
           const [videosRes, releaseRes] = await Promise.all([
-            api.get(`/movie/${movie.id}/videos`, {
-              params: { language: 'ko-KR' },
-            }),
+            api.get(`/movie/${movie.id}/videos`, { params: { language: 'ko-KR' } }),
             api.get(`/movie/${movie.id}/release_dates`),
           ]);
 
@@ -44,9 +42,7 @@ const Banner = () => {
             if (cert) setCertification(cert);
             break;
           }
-        } catch (err) {
-          console.error('Error fetching data:', err);
-        }
+        } catch {}
       }
     };
 
@@ -92,7 +88,6 @@ const Banner = () => {
 
         <div className="banner-fade-bottom" />
 
-        {/* 왼쪽 아래 텍스트 + 버튼 */}
         <div className="banner-content">
           <h1>{randomMovie.title}</h1>
           <div className="left-buttons">
@@ -103,7 +98,6 @@ const Banner = () => {
           </div>
         </div>
 
-        {/* 오른쪽 아래 버튼 */}
         <div className="right-buttons">
           <button className="banner-mute-button" onClick={toggleMute}>
             {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}

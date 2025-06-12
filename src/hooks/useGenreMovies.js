@@ -8,7 +8,7 @@ export const useGenreMoviesQuery = (genreId) => {
       const res = await api.get(`/discover/movie`, {
         params: {
           with_genres: genreId,
-          sort_by: 'popularity.desc', // 추천 옵션
+          sort_by: 'popularity.desc', 
         },
       });
       return res.data;

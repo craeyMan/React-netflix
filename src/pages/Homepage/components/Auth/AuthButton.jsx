@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { useAuth } from '../../../../context/AuthContext';
 import LoginModal from './LoginModal/LoginModal';
-import { useNavigate } from 'react-router-dom'; // ✅ 추가
-import { toast } from 'react-toastify'; // ✅ 추가
+import { useNavigate } from 'react-router-dom'; 
+import { toast } from 'react-toastify'; 
 
 const AuthButton = () => {
   const { isLoggedIn, logout, toggleLoginModal, showLoginModal } = useAuth();
-  const navigate = useNavigate(); // ✅ 추가
+  const navigate = useNavigate(); 
 
-  // ✅ 로그인 성공 시 모달 자동 닫기 보정
   useEffect(() => {
     if (isLoggedIn && showLoginModal) {
       toggleLoginModal();

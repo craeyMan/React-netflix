@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8); /* 어두운 배경 */
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,7 +46,6 @@
   -webkit-text-fill-color: white;
   transition: background-color 5000s ease-in-out 0s;
 }
-
 
 .login-button {
   width: 100%;
@@ -91,7 +90,7 @@
 
 .checkbox-wrapper {
   display: flex;
-  align-items: center;         /* ✅ 세로 정렬 */
+  align-items: center;
   gap: 8px;
   margin-bottom: 1rem;
   font-size: 14px;
@@ -104,7 +103,7 @@
   margin: 0;
   padding: 0;
   position: relative;
-  top: 1px;                    /* ✅ 줄 살짝 맞추기 위한 미세 위치 조정 */
+  top: 1px;
   accent-color: red;
 }
 

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import authApi from '../../utils/authApi'; // ✅ 인증 토큰 포함된 axios 인스턴스 사용
+import authApi from '../../utils/authApi';
 
 const BoardContext = createContext();
 
@@ -12,9 +12,7 @@ export const BoardProvider = ({ children }) => {
     try {
       const res = await authApi.get('/posts');
       setPosts(res.data);
-    } catch (err) {
-      console.error('📛 게시글 불러오기 실패:', err.message);
-    }
+    } catch {}
   };
 
   useEffect(() => {
@@ -25,9 +23,7 @@ export const BoardProvider = ({ children }) => {
     try {
       await authApi.post('/posts', post);
       fetchPosts();
-    } catch (err) {
-      console.error('📛 게시글 등록 실패:', err.message);
-    }
+    } catch {}
   };
 
   const getPostById = (id) => posts.find((p) => p.id === parseInt(id));

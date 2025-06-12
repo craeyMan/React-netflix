@@ -7,7 +7,6 @@
   background-color: black;
 }
 
-/* 상단 제목 + 버튼 라인 */
 .board-header {
   display: flex;
   justify-content: space-between;
@@ -15,7 +14,6 @@
   margin-bottom: 20px;
 }
 
-/* 테이블 스타일 */
 .board-table {
   border-collapse: collapse;
   width: 100%;
@@ -27,7 +25,7 @@
 .board-table th {
   text-align: center;
   background-color: transparent;
-  border: 1px solid #ff3c3c;   /* 빨간 선 */
+  border: 1px solid #ff3c3c;   
   padding: 12px;
   color: white;
 }
@@ -38,16 +36,14 @@
   white-space: nowrap;
 }
 
-/* 버튼 스타일 (검색, 글쓰기 전부) */
 .common-button {
   height: 42px;
   font-size: 16px;
   padding: 6px 16px;
   border-radius: 8px;
-  white-space: nowrap;       /* ✅ 검색 텍스트 줄바꿈 방지 */
+  white-space: nowrap;       
 }
 
-/* 검색창 스타일 */
 .common-input {
   height: 42px;
   font-size: 16px;
@@ -61,7 +57,6 @@
   vertical-align: middle; 
 }
 
-/* 검색창 포커스 시 */
 .common-input:focus {
   width: 250px;
   background-color: black ;

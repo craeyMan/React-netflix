@@ -1,4 +1,3 @@
-/* 박스 테두리 추가 (게시판처럼) */
 .post-box {
   border: 1px solid #ff3c3c;
   padding: 20px;
@@ -8,14 +7,13 @@
 
 .post-detail-page {
   margin-top: 40px;
-  color: white;
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   background-color: black;
+  color: white;
 }
 
-/* 제목 + 작성자/날짜 정렬 */
 .post-header-row {
   display: flex;
   justify-content: space-between;
@@ -24,14 +22,12 @@
   flex-wrap: wrap;
 }
 
-/* 제목 */
 .post-title {
   font-size: 2rem;
   margin-bottom: 0;
   flex-grow: 1;
 }
 
-/* 작성자 + 날짜 묶음 */
 .post-meta {
   display: flex;
   flex-direction: column;
@@ -40,15 +36,13 @@
   color: #ccc;
 }
 
-/* 구분선 */
 .post-detail-page hr {
   border: none;
   border-top: 1px solid #ff3c3c;
   margin: 16px 0;
-  opacity: 1;  
+  opacity: 1;
 }
 
-/* 본문 */
 .post-content {
   white-space: pre-wrap;
   font-size: 1.1rem;
@@ -56,20 +50,8 @@
   color: white;
 }
 
-/* 버튼 공통 스타일 */
-.post-detail-page .btn {
-  height: 42px;
-  font-size: 16px;
-  padding: 6px 16px;
-  border-radius: 8px;
-  white-space: nowrap;
-}
-
-/* 빨간 테두리 버튼 */
+.post-detail-page .btn,
 .outline-red-btn {
-  background-color: transparent;
-  border: 1px solid #ff3c3c;
-  color: white;
   height: 42px;
   font-size: 16px;
   padding: 6px 16px;
@@ -78,7 +60,12 @@
   transition: all 0.3s ease;
 }
 
-/* 마우스 오버 시: 빨간 배경 반전 효과 */
+.outline-red-btn {
+  background-color: transparent;
+  border: 1px solid #ff3c3c;
+  color: white;
+}
+
 .outline-red-btn:hover {
   background-color: #ff3c3c;
   color: white;

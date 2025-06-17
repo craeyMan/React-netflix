@@ -5,12 +5,14 @@ import { useMovieGenreQuery } from '../../hooks/useMovieGenre';
 import { Badge } from 'react-bootstrap';
 import { useAuth } from '../../context/AuthContext';
 import authApi from '../../utils/authApi';
+import { toast } from 'react-toastify';
 
 const MovieCard = ({ movie, onMovieClick }) => {
   const [liked, setLiked] = useState(false);
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
+    // 해당 영화에 대해 로그인 유저가 '좋아요' 했는지 확인
     const checkLiked = async () => {
       try {
         const res = await authApi.get(`/likes/${movie.id}`);
@@ -24,11 +26,12 @@ const MovieCard = ({ movie, onMovieClick }) => {
 
   const handleLike = async () => {
     if (!isLoggedIn) {
-      alert('로그인 후 이용 가능합니다.');
+      toast.warn('로그인 후 이용 가능합니다.');
       return;
     }
 
     try {
+      // 좋아요 상태 토글
       if (!liked) {
         await authApi.post('/likes', { movieId: movie.id }); 
       } else {
@@ -42,6 +45,7 @@ const MovieCard = ({ movie, onMovieClick }) => {
 
   const { data: genreData } = useMovieGenreQuery();
 
+  // 장르 ID 배열 → 장르명 배열로 변환
   const showGenre = (genreIdList) => {
     if (!genreData) return [];
     return genreIdList.map((id) => {
@@ -68,7 +72,7 @@ const MovieCard = ({ movie, onMovieClick }) => {
           />
           <FaChevronDown
             className="icon right-icon"
-            onClick={() => onMovieClick(movie)}
+            onClick={() => onMovieClick(movie)} // 상세 모달 열기
           />
         </div>
 

@@ -15,6 +15,7 @@ const SignupPage = ({ setIsSignup }) => {
     gender: '',
   });
 
+  // 입력 필드 값 상태 업데이트
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -23,6 +24,7 @@ const SignupPage = ({ setIsSignup }) => {
     e.preventDefault();
 
     try {
+      // 회원가입 요청 시도
       await authApi.post('/api/users/signup', {
         username: formData.username,
         password: formData.password,
@@ -33,9 +35,11 @@ const SignupPage = ({ setIsSignup }) => {
         gender: formData.gender === 'male' ? '남' : '여',
       });
 
+      // 성공 시 로그인 화면으로 전환
       toast.success('✅ 회원가입 성공! 이제 로그인하세요.');
       setIsSignup(false);
     } catch (err) {
+      // 이미 존재하는 아이디일 경우 또는 기타 오류 처리
       if (err.response?.status === 400) {
         toast.warn('⚠️ 이미 존재하는 아이디입니다.');
       } else {

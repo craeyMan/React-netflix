@@ -5,6 +5,7 @@ const authApi = axios.create({
   baseURL: 'http://localhost:3500',
 });
 
+// 요청 시 Authorization 헤더에 JWT 토큰 추가
 authApi.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
@@ -27,6 +28,7 @@ authApi.interceptors.response.use(
     const isTokenExpired =
       message.includes('만료') || message.toLowerCase().includes('expired');
 
+    // 토큰 만료 시 1회 자동 로그아웃 처리
     if ((status === 401 || status === 403) && isTokenExpired && !isLogout) {
       isLogout = true;
       toast.info('로그인 시간이 만료되어 로그아웃됩니다.');

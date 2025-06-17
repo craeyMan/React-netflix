@@ -3,6 +3,7 @@ import MovieGenreSection from '../../common/MovieGenreSection/MovieGenreSection'
 import MovieModal from '../Homepage/MovieModal/MovieModal';
 import './MoviePage.style.css'; 
 
+// 장르 ID와 이름 리스트 정의
 const genreList = [
   { id: 28, title: '액션' },
   { id: 12, title: '모험' },
@@ -29,11 +30,13 @@ const MoviePage = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
+  // 영화 클릭 시 모달에 정보 전달
   const handleMovieClick = (movie) => {
     setSelectedMovie(movie);
     setModalOpen(true);
   };
 
+  // 모달 닫기
   const handleCloseModal = () => {
     setSelectedMovie(null);
     setModalOpen(false);

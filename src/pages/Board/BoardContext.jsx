@@ -3,11 +3,13 @@ import authApi from '../../utils/authApi';
 
 const BoardContext = createContext();
 
+// 커스텀 훅으로 BoardContext 접근
 export const useBoard = () => useContext(BoardContext);
 
 export const BoardProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
 
+  // 게시글 목록 불러오기
   const fetchPosts = async () => {
     try {
       const res = await authApi.get('/posts');
@@ -16,16 +18,18 @@ export const BoardProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    // 컴포넌트 마운트 시 전체 게시글 로드
     fetchPosts();
   }, []);
 
+  // 게시글 등록 후 목록 새로고침
   const addPost = async (post) => {
     try {
       await authApi.post('/posts', post);
       fetchPosts();
     } catch {}
   };
-
+  // ID로 게시글 찾기
   const getPostById = (id) => posts.find((p) => p.id === parseInt(id));
 
   return (

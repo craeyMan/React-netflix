@@ -8,6 +8,7 @@ const AuthButton = () => {
   const { isLoggedIn, logout, toggleLoginModal, showLoginModal } = useAuth();
   const navigate = useNavigate(); 
 
+  // 로그인 후 로그인 모달이 열려있다면 자동으로 닫기
   useEffect(() => {
     if (isLoggedIn && showLoginModal) {
       toggleLoginModal();
@@ -16,10 +17,12 @@ const AuthButton = () => {
 
   const handleClick = () => {
     if (isLoggedIn) {
+      // 로그아웃 처리 및 홈으로 이동
       logout();
       toast.success('👋 로그아웃 되었습니다.');
       navigate('/');
     } else {
+      // 로그인 모달 열기
       toggleLoginModal();
     }
   };
@@ -33,6 +36,7 @@ const AuthButton = () => {
       >
         {isLoggedIn ? '로그아웃' : '로그인'}
       </span>
+      {/* 로그인 모달 표시 여부에 따라 렌더링 */}
       {showLoginModal && <LoginModal />}
     </>
   );

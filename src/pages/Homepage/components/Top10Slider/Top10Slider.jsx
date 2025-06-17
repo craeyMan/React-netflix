@@ -9,12 +9,8 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './Top10Slider.style.css';
 import { useAuth } from '../../../../context/AuthContext';
-
-const responsive = {
-  desktop: { breakpoint: { max: 3000, min: 1024 }, items: 7 },
-  tablet: { breakpoint: { max: 1024, min: 464 }, items: 6 },
-  mobile: { breakpoint: { max: 464, min: 0 }, items: 5 },
-};
+import { responsive } from '../../../../constants/responsive';
+import { toast } from 'react-toastify'; 
 
 const Top10Slider = ({ onMovieClick }) => {
   const [topMovies, setTopMovies] = useState([]);
@@ -26,6 +22,7 @@ const Top10Slider = ({ onMovieClick }) => {
   useEffect(() => {
     const fetchTop10 = async () => {
       try {
+         // 서버에서 좋아요 기준 Top10 영화 ID 목록 받아오기 + 각 영화 상세 정보 요청
         const res = await authApi.get('/likes/top10');
         const movieDetails = await Promise.all(
           res.data.map(async (item) => {
@@ -35,6 +32,7 @@ const Top10Slider = ({ onMovieClick }) => {
         );
         setTopMovies(movieDetails);
 
+        // 로그인된 유저의 영화별 좋아요 상태 조회
         const likedStatus = {};
         for (const movie of movieDetails) {
           try {
@@ -55,9 +53,10 @@ const Top10Slider = ({ onMovieClick }) => {
     fetchTop10();
   }, []);
 
+  // 좋아요 버튼 클릭 처리, 삭제 처리
   const handleLike = async (movieId) => {
     if (!isLoggedIn) {
-      alert('로그인 후 이용 가능합니다.');
+      toast.warn('로그인 후 이용 가능합니다.');
       return;
     }
 

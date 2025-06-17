@@ -14,11 +14,14 @@ const SearchPage = () => {
   const [query] = useSearchParams();
   const keyword = query.get("q");
   const [page, setPage] = useState(1);
+
+  // 검색 API 호출
   const { data, isLoading, isError, error } = useSearchMovieQuery({ keyword, page });
 
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
+  // 검색어가 변경되면 페이지와 모달 상태 초기화
   useEffect(() => {
     setPage(1);
     setSelectedMovie(null);

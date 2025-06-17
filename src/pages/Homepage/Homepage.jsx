@@ -11,6 +11,7 @@ const Homepage = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
+  // 영화 클릭 시 모달에 영화 정보 설정
   const handleMovieClick = (movie) => {
     setSelectedMovie(movie);
     setShowModal(true);

@@ -12,7 +12,7 @@ const MovieGenreSection = ({ genreId, title, onMovieClick }) => {
   const { data, isLoading, isError, error } = useMovieGenreQuery(genreId);
 
   const movies = data?.results;
-  const filteredMovies = movies?.filter((movie) => movie.poster_path);
+  const filteredMovies = movies?.filter((movie) => movie.poster_path); // 포스터가 있는 영화만 필터링
 
   if (isLoading) return <Spinner />;
   if (isError) return <Alert variant="danger">{title} 에러: {error.message}</Alert>;
@@ -24,17 +24,17 @@ const MovieGenreSection = ({ genreId, title, onMovieClick }) => {
       <Carousel
         autoPlay
         autoPlaySpeed={3000}
-        infinite
+        infinite={true}
         responsive={responsive}
         itemClass="carousel-item-spacing"
         containerClass="carousel-container"
-        keyBoardControl
+        keyBoardControl={true} // 키보드 화살표로 슬라이드 가능
       >
         {filteredMovies.map((movie, index) => (
           <MovieCard
             key={index}
             movie={movie}
-            onMovieClick={onMovieClick}
+            onMovieClick={onMovieClick} // 영화 클릭 시 상세 모달 열기
           />
         ))}
       </Carousel>

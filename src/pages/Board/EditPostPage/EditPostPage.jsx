@@ -4,6 +4,7 @@ import { Form, Button, Container } from 'react-bootstrap';
 import authApi from '../../../utils/authApi';
 import './EditPostPage.style.css';
 import { toast } from 'react-toastify';
+import Spinner from '../../Homepage/components/Spinner/Spinner';
 
 const EditPostPage = () => {
   const { id } = useParams();
@@ -13,20 +14,26 @@ const EditPostPage = () => {
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
   const [isSecret, setIsSecret] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    authApi.get(`/posts/${id}`)
-      .then((res) => {
+    const fetchPost = async () => {
+      try {
+        const res = await authApi.get(`/posts/${id}`);
         const post = res.data;
         setTitle(post.title);
         setContent(post.content);
         setAuthor(post.author);
-        setIsSecret(post.isSecret);
-      })
-      .catch(() => {
+        setIsSecret(post.isSecret); // 기존 비밀글 여부 반영
+      } catch {
         alert('게시글을 불러오는 데 실패했습니다.');
         navigate('/board');
-      });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPost();
   }, [id, navigate]);
 
   const handleSubmit = async (e) => {
@@ -34,13 +41,18 @@ const EditPostPage = () => {
     const updatedPost = { title, content, author, isSecret };
 
     try {
+      setLoading(true);
       await authApi.put(`/posts/${id}`, updatedPost);
       toast.success('게시글이 수정되었습니다!');
-      navigate('/board', { state: { updated: true } });
+      navigate('/board', { state: { updated: true } }); // 수정 후 목록 새로고침 유도
     } catch (error) {
       toast.error('수정 중 오류 발생');
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <Container className="edit-post-page">

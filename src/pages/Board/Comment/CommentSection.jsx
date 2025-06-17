@@ -3,10 +3,12 @@ import authApi from '../../../utils/authApi';
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import { jwtDecode } from 'jwt-decode';
 import './CommentSection.style.css';
+import Spinner from '../../Homepage/components/Spinner/Spinner';
 
 const CommentSection = ({ postId, postTitle, postAuthor, isSecret }) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem('token') || sessionStorage.getItem('token');
   const decoded = token ? jwtDecode(token) : null;
@@ -15,20 +17,25 @@ const CommentSection = ({ postId, postTitle, postAuthor, isSecret }) => {
   const isAdmin = role === 'ADMIN';
   const isAuthor = username === postAuthor;
 
+  // 댓글 보기/쓰기 권한 설정
   const canView = !isSecret || isAuthor || isAdmin;
   const canWrite = isAuthor || isAdmin;
 
   useEffect(() => {
     if (canView) {
-      fetchComments();
+      fetchComments(); // 비밀글 조건을 통과한 경우에만 댓글 불러오기
     }
   }, [postId, canView]);
 
   const fetchComments = async () => {
     try {
+      setLoading(true);
       const res = await authApi.get(`/api/comments/${postId}`);
       setComments(res.data || []);
-    } catch (err) {}
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -36,6 +43,7 @@ const CommentSection = ({ postId, postTitle, postAuthor, isSecret }) => {
     if (!content.trim()) return;
 
     try {
+      setLoading(true);
       await authApi.post('/api/comments', {
         postId,
         author: username,
@@ -43,21 +51,30 @@ const CommentSection = ({ postId, postTitle, postAuthor, isSecret }) => {
       });
       setContent('');
       await fetchComments();
-    } catch (err) {}
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleDelete = async (commentId) => {
     try {
+      setLoading(true);
       await authApi.delete(`/api/comments/${commentId}`);
       await fetchComments();
-    } catch (err) {}
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="comment-section">
       <h5 className="comment-title">댓글</h5>
 
-      {!canView ? (
+      {loading ? (
+        <Spinner />
+      ) : !canView ? (
         <p className="text-muted">비밀글입니다. 댓글을 볼 수 없습니다.</p>
       ) : comments.length === 0 ? (
         isAuthor || isAdmin ? (
@@ -88,6 +105,7 @@ const CommentSection = ({ postId, postTitle, postAuthor, isSecret }) => {
 
       {canWrite && (
         <Form onSubmit={handleSubmit} className="comment-form mt-4">
+          {/*관리자 또는 작성자만 댓글 작성 가능*/}
           <Row className="mb-2">
             <Col>
               <Form.Label className="comment-label">게시글 제목</Form.Label>

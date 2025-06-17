@@ -19,6 +19,7 @@ const Banner = () => {
   useEffect(() => {
     if (!data?.results) return;
 
+    // 유튜브 예고편이 있는 무작위 영화 선택
     const fetchValidMovie = async () => {
       const shuffled = [...data.results].sort(() => 0.5 - Math.random());
 
@@ -37,6 +38,7 @@ const Banner = () => {
             setRandomMovie(movie);
             setTrailerKey(trailer.key);
 
+            // 국내 심의 등급 추출
             const krRelease = releaseRes.data.results.find(r => r.iso_3166_1 === 'KR');
             const cert = krRelease?.release_dates?.[0]?.certification;
             if (cert) setCertification(cert);
@@ -49,11 +51,13 @@ const Banner = () => {
     fetchValidMovie();
   }, [data]);
 
+  // 유튜브 플레이어 준비되면 음소거 상태 적용
   const handlePlayerReady = (event) => {
     setPlayer(event.target);
     isMuted ? event.target.mute() : event.target.unMute();
   };
 
+  // 음소거 토글 버튼 처리
   const toggleMute = () => {
     if (player) {
       isMuted ? player.unMute() : player.mute();

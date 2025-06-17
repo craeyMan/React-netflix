@@ -33,16 +33,14 @@
 }
 
 .movie-slider-wrapper {
-  margin-top: 80px; /* 👈 배너와 슬라이더 사이 여백 */
+  margin-top: 80px; 
 }
 
-/* 기본적으로 화살표 숨김 */
 .movie-slider-wrapper .react-multiple-carousel__arrow {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-/* 마우스를 올렸을 때만 화살표 보이게 */
 .movie-slider-wrapper:hover .react-multiple-carousel__arrow {
   opacity: 1;
 }

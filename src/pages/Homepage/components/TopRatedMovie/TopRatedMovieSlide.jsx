@@ -6,9 +6,13 @@ import Spinner from '../Spinner/Spinner';
 import { responsive } from '../../../../constants/responsive';
 
 const TopRatedMovieSlide = ({ onMovieClick }) => {
+  // 평점 높은 영화 목록을 가져오는 커스텀 훅
   const { data, isLoading, isError, error } = useTopRatedMovies();
 
+  // 로딩 중이면 스피너 표시
   if (isLoading) return <Spinner />;
+
+  // 오류 발생 시 경고창 출력
   if (isError) return <Alert variant="danger">{error.message}</Alert>;
 
   return (

@@ -3,20 +3,12 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import SearchBox from '../pages/Homepage/components/Search/SearchBox';
 import { Link } from 'react-router-dom';
 import AuthButton from '../pages/Homepage/components/Auth/AuthButton';
 
 const AppLayout = () => {
-  const [keyword,setKeyword] = useState("");
-  const navigate = useNavigate()
 
-  const searchByKeyword = (event) => {
-    event.preventDefault()
-    navigate(`/movies?q=${keyword}`);
-    setKeyword("");
-  }
   return (
     <div className="main" >
     <Navbar expand="lg" bg="black" variant="black">

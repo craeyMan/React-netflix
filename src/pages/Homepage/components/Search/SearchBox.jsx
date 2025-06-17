@@ -7,6 +7,7 @@ const SearchBox = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // 검색 페이지가 아닐 경우 입력값 초기화
   useEffect(() => {
     if (!location.pathname.startsWith('/movies/search')) {
       setKeyword('');
@@ -14,6 +15,7 @@ const SearchBox = () => {
   }, [location.pathname]);
 
   useEffect(() => {
+     // 입력값이 변경될 때 300ms 후 자동 검색 페이지 이동
     const delay = setTimeout(() => {
       if (keyword.trim().length > 0) {
         navigate(`/movies/search?q=${keyword}`);

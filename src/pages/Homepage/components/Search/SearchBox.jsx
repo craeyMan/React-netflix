@@ -15,14 +15,13 @@ const SearchBox = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-     // 입력값이 변경될 때 300ms 후 자동 검색 페이지 이동
+    // 입력값이 변경될 때 300ms 후 자동 검색 페이지 이동
     const delay = setTimeout(() => {
-      if (keyword.trim().length > 0) {
-        navigate(`/movies/search?q=${keyword}`);
-      } else {
-        if (location.pathname.startsWith('/movies/search')) {
-          navigate('/');
-        }
+      const trimmed = keyword.trim();
+      if (trimmed) {
+        navigate(`/movies/search?q=${trimmed}`);
+      } else if (location.pathname.startsWith('/movies/search')) {
+        navigate('/');
       }
     }, 300);
 

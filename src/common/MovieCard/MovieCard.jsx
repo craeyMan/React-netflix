@@ -6,20 +6,22 @@ import { Badge } from 'react-bootstrap';
 import { useAuth } from '../../context/AuthContext';
 import authApi from '../../utils/authApi';
 import { toast } from 'react-toastify';
+import { useLike } from '../../context/LikeContext';
 
 const MovieCard = ({ movie, onMovieClick }) => {
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(false); // 로컬 상태는 주석 보존용으로 유지하되 사용은 안함
   const { isLoggedIn } = useAuth();
+  const { data: genreData } = useMovieGenreQuery();
+  const { likedMap, toggleLike } = useLike(); 
+  const isLiked = likedMap[movie.id] || false;
 
   useEffect(() => {
     // 해당 영화에 대해 로그인 유저가 '좋아요' 했는지 확인
     const checkLiked = async () => {
       try {
         const res = await authApi.get(`/likes/${movie.id}`);
-        setLiked(res.data.liked);
-      } catch (err) {
-        console.error('좋아요 상태 조회 실패:', err.message);
-      }
+        setLiked(res.data.liked); 
+      } catch {}
     };
     checkLiked();
   }, [movie.id]);
@@ -30,28 +32,14 @@ const MovieCard = ({ movie, onMovieClick }) => {
       return;
     }
 
-    try {
-      // 좋아요 상태 토글
-      if (!liked) {
-        await authApi.post('/likes', { movieId: movie.id }); 
-      } else {
-        await authApi.delete(`/likes/${movie.id}`); 
-      }
-      setLiked(!liked);
-    } catch (err) {
-      console.error('좋아요 처리 실패:', err.message);
-    }
+    await toggleLike(movie.id); // Context로 좋아요 처리
   };
 
-  const { data: genreData } = useMovieGenreQuery();
-
-  // 장르 ID 배열 → 장르명 배열로 변환
   const showGenre = (genreIdList) => {
     if (!genreData) return [];
-    return genreIdList.map((id) => {
-      const genreObj = genreData.find((genre) => genre.id === id);
-      return genreObj?.name;
-    });
+    return genreIdList
+      .map((id) => genreData.find((genre) => genre.id === id)?.name)
+      .filter(Boolean);
   };
 
   return (
@@ -67,7 +55,7 @@ const MovieCard = ({ movie, onMovieClick }) => {
         <div className="button-group">
           <FaPlay className="icon" />
           <FaThumbsUp
-            className={`icon ${liked ? 'liked' : ''}`}
+            className={`icon ${isLiked ? 'liked' : ''}`}
             onClick={handleLike}
           />
           <FaChevronDown
@@ -79,7 +67,7 @@ const MovieCard = ({ movie, onMovieClick }) => {
         <div className="movie-title">{movie.title}</div>
 
         <div className="movie-genres">
-          {showGenre(movie.genre_ids)?.map((genre, index) => (
+          {showGenre(movie.genre_ids).map((genre, index) => (
             <Badge bg="danger" key={index} className="me-1">
               {genre}
             </Badge>

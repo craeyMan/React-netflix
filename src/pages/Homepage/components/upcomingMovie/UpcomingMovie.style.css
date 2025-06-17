@@ -1,18 +1,16 @@
-  .Upcoming-slider-wrapper {
-    margin-top: 80px; /* 또는 40px 등 자유롭게 조절 가능 */
-  }
-  .upcoming-carousel-item {
-    padding: 0 3px; 
-    box-sizing: border-box;
-  }
+.Upcoming-slider-wrapper {
+  margin-top: 80px; 
+}
+.upcoming-carousel-item {
+  padding: 0 3px; 
+  box-sizing: border-box;
+}
 
-  /* 기본 화살표 숨기기 */
 .Upcoming-slider-wrapper .react-multiple-carousel__arrow {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-/* 마우스를 올리면 화살표 나타남 */
 .Upcoming-slider-wrapper:hover .react-multiple-carousel__arrow {
   opacity: 1;
 }

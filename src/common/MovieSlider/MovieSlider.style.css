@@ -1,23 +1,22 @@
-/* ✅ 전체 Carousel wrapper */
 .carousel-container {
-  padding: 0;               /* 좌우 여백 확보 (화살표 안에 들어오게) */
+  padding: 0;               
   overflow: hidden;
   height: auto;
   box-sizing: border-box;
 }
 
-/* ✅ 각 슬라이드 카드 하나 (itemClass로 적용됨) */
+
 .movie-slider {
-  padding: 0 ;                /* 카드 간 간격을 좁게 */
+  padding: 0 ;                
   margin: 0;
   box-sizing: border-box;
-  flex: 0 0 auto;                /* 자동 확장 방지 */
-  width: auto;                   /* 라이브러리에서 강제한 width 무시 */
+  flex: 0 0 auto;               
+  width: auto;                   
 }
 
 /* ✅ Carousel 내부 트랙 (카드들이 들어있는 라인) */
 .react-multi-carousel-track {
-  justify-content: center;      /* 카드들을 가운데로 정렬 */
+  justify-content: center;      
   align-items: stretch;
   margin: 0 auto;
   display: flex;

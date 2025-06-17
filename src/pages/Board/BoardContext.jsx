@@ -11,10 +11,8 @@ export const BoardProvider = ({ children }) => {
 
   // 게시글 목록 불러오기
   const fetchPosts = async () => {
-    try {
-      const res = await authApi.get('/posts');
-      setPosts(res.data);
-    } catch {}
+    const res = await authApi.get('/posts');
+    setPosts(res.data);
   };
 
   useEffect(() => {
@@ -24,11 +22,10 @@ export const BoardProvider = ({ children }) => {
 
   // 게시글 등록 후 목록 새로고침
   const addPost = async (post) => {
-    try {
-      await authApi.post('/posts', post);
-      fetchPosts();
-    } catch {}
+    await authApi.post('/posts', post);
+    fetchPosts();
   };
+
   // ID로 게시글 찾기
   const getPostById = (id) => posts.find((p) => p.id === parseInt(id));
 

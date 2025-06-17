@@ -9,27 +9,37 @@ export const AuthProvider = ({ children }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const logoutTimer = useRef(null);
 
+  const clearExistingTimer = () => {
+    if (logoutTimer.current) clearTimeout(logoutTimer.current);
+  };
+
+  const startLogoutTimer = (exp) => {
+    const now = Date.now();
+    const timeout = exp * 1000 - now;
+
+    if (timeout > 0) {
+      clearExistingTimer();
+      logoutTimer.current = setTimeout(() => {
+        logout();
+        toast.info("로그인 시간이 만료되어 자동 로그아웃되었습니다.");
+      }, timeout);
+    } else {
+      logout();
+    }
+  };
+
   const login = (token, rememberMe = false) => {
     if (rememberMe) {
       localStorage.setItem("token", token);
     } else {
       sessionStorage.setItem("token", token);
     }
+
     setIsLoggedIn(true);
 
     try {
       const decoded = jwtDecode(token);
-      const exp = decoded.exp * 1000;
-      const now = Date.now();
-      const timeout = exp - now;
-
-      if (timeout > 0) {
-        if (logoutTimer.current) clearTimeout(logoutTimer.current);
-        logoutTimer.current = setTimeout(() => {
-          logout();
-          toast.info("로그인 시간이 만료되어 자동 로그아웃되었습니다.");
-        }, timeout);
-      }
+      startLogoutTimer(decoded.exp);
     } catch (e) {
       // JWT 디코딩 실패 시 무시
     }
@@ -39,7 +49,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(false);
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
-    if (logoutTimer.current) clearTimeout(logoutTimer.current);
+    clearExistingTimer();
   };
 
   const toggleLoginModal = () => {
@@ -53,20 +63,9 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
       try {
         const decoded = jwtDecode(token);
-        const exp = decoded.exp * 1000;
-        const now = Date.now();
-        const timeout = exp - now;
-
-        if (timeout > 0) {
-          logoutTimer.current = setTimeout(() => {
-            logout();
-            toast.info("로그인 시간이 만료되어 자동 로그아웃되었습니다.");
-          }, timeout);
-        } else {
-          logout();
-        }
-      } catch (e) {
-        logout(); 
+        startLogoutTimer(decoded.exp);
+      } catch {
+        logout();
       }
     }
   }, []);

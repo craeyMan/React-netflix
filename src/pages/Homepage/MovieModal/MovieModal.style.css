@@ -42,6 +42,7 @@
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 10px;
+    color: #aaa;
   }
   
   .modal-icons {
@@ -94,6 +95,7 @@
   }
   
   .modal-overview {
+    color: #aaa;
     font-size: 1rem;
     line-height: 1.5;
     max-height: 150px;
@@ -163,6 +165,12 @@
     display: flex;
     align-items: center;
     gap: 12px;
+  }
+
+  .movie-age {
+    color: #aaa;
+    font-size: 1rem;
+    margin-top: 10px;
   }
   
   .cert-badge {

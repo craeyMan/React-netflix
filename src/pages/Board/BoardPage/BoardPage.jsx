@@ -57,7 +57,6 @@ const BoardPage = () => {
     }
   }, [location.state]);
 
-  // 현재 페이지에 표시할 게시글 계산
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -67,6 +66,7 @@ const BoardPage = () => {
     if (totalPages <= 1) return null;
 
     const items = [];
+
     items.push(
       <Pagination.Prev
         key="prev"
@@ -163,7 +163,6 @@ const BoardPage = () => {
                         const isAdmin = role?.toUpperCase().includes('ADMIN');
                         const isAuthor = post.author === username;
 
-                        // 비밀글 접근 제한
                         if (post.isSecret && !isAdmin && !isAuthor) {
                           toast.warn('비밀글입니다.');
                           return;

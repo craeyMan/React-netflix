@@ -28,21 +28,6 @@
   box-shadow: 0 0 0 2px rgba(255, 60, 60, 0.3);
 }
 
-.new-post-form textarea {
-  height: 150px;
-  resize: vertical;
-}
-
-.new-post-form button {
-  background-color: #e50914;
-  padding: 12px;
-  width: 100%;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 .outline-red-btn {
   background-color: transparent;
   border: 1px solid #ff3c3c;

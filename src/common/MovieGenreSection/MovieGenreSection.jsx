@@ -24,11 +24,11 @@ const MovieGenreSection = ({ genreId, title, onMovieClick }) => {
       <Carousel
         autoPlay
         autoPlaySpeed={3000}
-        infinite={true}
+        infinite
         responsive={responsive}
         itemClass="carousel-item-spacing"
         containerClass="carousel-container"
-        keyBoardControl={true} // 키보드 화살표로 슬라이드 가능
+        keyBoardControl // 키보드 화살표로 슬라이드 가능
       >
         {filteredMovies.map((movie, index) => (
           <MovieCard

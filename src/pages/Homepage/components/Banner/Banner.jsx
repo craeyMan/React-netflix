@@ -38,9 +38,10 @@ const Banner = () => {
             setRandomMovie(movie);
             setTrailerKey(trailer.key);
 
-            // 국내 심의 등급 추출
-            const krRelease = releaseRes.data.results.find(r => r.iso_3166_1 === 'KR');
-            const cert = krRelease?.release_dates?.[0]?.certification;
+            const cert = releaseRes.data.results
+              .find(r => r.iso_3166_1 === 'KR')
+              ?.release_dates?.[0]?.certification;
+
             if (cert) setCertification(cert);
             break;
           }

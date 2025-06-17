@@ -12,11 +12,11 @@
 }
 
 .login-modal-content {
+  width: 300px;
   padding: 3rem 2.5rem;
   border-radius: 8px;
-  width: 300px;
-  color: white;
   text-align: center;
+  color: white;
 }
 
 .login-modal-content h2 {
@@ -30,8 +30,8 @@
   padding: 12px;
   margin-bottom: 1rem;
   font-size: 14px;
-  border-radius: 4px;
   border: 1px solid #ccc;
+  border-radius: 4px;
   background-color: #333;
   color: white;
 }
@@ -100,10 +100,10 @@
 .checkbox-wrapper input[type="checkbox"] {
   width: 16px;
   height: 16px;
-  margin: 0;
-  padding: 0;
   position: relative;
   top: 1px;
+  margin: 0;
+  padding: 0;
   accent-color: red;
 }
 

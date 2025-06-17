@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MovieGenreSection from '../../common/MovieGenreSection/MovieGenreSection';
 import MovieModal from '../Homepage/MovieModal/MovieModal';
-import './MoviePage.style.css'; 
+import './MoviePage.style.css';
 
 // 장르 ID와 이름 리스트 정의
 const genreList = [
@@ -38,8 +38,8 @@ const MoviePage = () => {
 
   // 모달 닫기
   const handleCloseModal = () => {
-    setSelectedMovie(null);
     setModalOpen(false);
+    setSelectedMovie(null);
   };
 
   return (
@@ -53,7 +53,7 @@ const MoviePage = () => {
         />
       ))}
 
-      {selectedMovie && (
+      {selectedMovie && modalOpen && (
         <MovieModal
           show={modalOpen}
           onClose={handleCloseModal}

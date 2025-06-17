@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import authApi from '../../../../utils/authApi';
-import Api from '../../../../utils/api';
+import React from 'react';
 import Spinner from '../Spinner/Spinner';
 import Alert from 'react-bootstrap/Alert';
 import { FaPlay, FaThumbsUp, FaChevronDown } from 'react-icons/fa';
@@ -10,69 +8,23 @@ import 'react-multi-carousel/lib/styles.css';
 import './Top10Slider.style.css';
 import { useAuth } from '../../../../context/AuthContext';
 import { responsive } from '../../../../constants/responsive';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
+import { useLike } from '../../../../context/LikeContext';
 
 const Top10Slider = ({ onMovieClick }) => {
-  const [topMovies, setTopMovies] = useState([]);
-  const [likedMap, setLikedMap] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const { isLoggedIn } = useAuth();
+  const { top10, likedMap, toggleLike } = useLike();
 
-  useEffect(() => {
-    const fetchTop10 = async () => {
-      try {
-         // 서버에서 좋아요 기준 Top10 영화 ID 목록 받아오기 + 각 영화 상세 정보 요청
-        const res = await authApi.get('/likes/top10');
-        const movieDetails = await Promise.all(
-          res.data.map(async (item) => {
-            const detailRes = await Api.get(`/movie/${item.movieId}`);
-            return detailRes.data;
-          })
-        );
-        setTopMovies(movieDetails);
+  if (!top10) return <Spinner />;
+  if (top10.length === 0) return <Alert variant="warning">Top10 영화가 없습니다.</Alert>;
 
-        // 로그인된 유저의 영화별 좋아요 상태 조회
-        const likedStatus = {};
-        for (const movie of movieDetails) {
-          try {
-            const res = await authApi.get(`/likes/${movie.id}`);
-            likedStatus[movie.id] = res.data.liked;
-          } catch {
-            likedStatus[movie.id] = false;
-          }
-        }
-        setLikedMap(likedStatus);
-      } catch {
-        setError('Top10 데이터를 불러오는 중 오류가 발생했습니다.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTop10();
-  }, []);
-
-  // 좋아요 버튼 클릭 처리, 삭제 처리
   const handleLike = async (movieId) => {
     if (!isLoggedIn) {
       toast.warn('로그인 후 이용 가능합니다.');
       return;
     }
-
-    try {
-      const isLiked = likedMap[movieId];
-      if (isLiked) {
-        await authApi.delete(`/likes/${movieId}`);
-      } else {
-        await authApi.post(`/likes`, { movieId });
-      }
-      setLikedMap((prev) => ({ ...prev, [movieId]: !isLiked }));
-    } catch {}
+    await toggleLike(movieId);
   };
-
-  if (loading) return <Spinner />;
-  if (error) return <Alert variant="danger">{error}</Alert>;
 
   return (
     <div className="top10-slider-wrapper">
@@ -84,7 +36,7 @@ const Top10Slider = ({ onMovieClick }) => {
         containerClass="top10-carousel-container"
         itemClass="top10-carousel-item"
       >
-        {topMovies.map((movie, index) => (
+        {top10.map((movie, index) => (
           <div key={movie.id} className="movie-card">
             <div className="rank-badge">{index + 1}</div>
             <div

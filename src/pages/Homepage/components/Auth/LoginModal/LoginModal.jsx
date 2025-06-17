@@ -15,43 +15,35 @@ const LoginModal = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       // 서버에 로그인 요청 → 성공 시 JWT 토큰 저장
-      const response = await authApi.post('/api/users/login', {
+      const { data } = await authApi.post('/api/users/login', {
         username: id,
         password: pw,
       });
 
-      const token = response.data.token;
-      if (!token) {
-        setMessage('⚠️ 토큰이 응답에 없습니다.');
+      if (!data.token) {
+        setMessage('토큰이 응답에 없습니다.');
         return;
       }
 
-      // 자동 로그인 여부에 따라 토큰 저장 위치 결정
-      if (autoLogin) {
-        localStorage.setItem('token', token);
-      } else {
-        sessionStorage.setItem('token', token);
-      }
+      autoLogin
+        ? localStorage.setItem('token', data.token)
+        : sessionStorage.setItem('token', data.token);
 
-      // 전역 로그인 처리 및 모달 닫기
-      login(token, autoLogin);
-      toast.success('✅ 로그인 되었습니다!');
+      login(data.token, autoLogin);
+      toast.success('로그인 되었습니다!');
       setShowLoginModal(false);
     } catch (error) {
-      // 인증 실패 또는 기타 오류 처리
       if (error.response?.status === 401) {
-        setMessage('❌ 아이디 또는 비밀번호가 올바르지 않습니다.');
+        setMessage('아이디 또는 비밀번호가 올바르지 않습니다.');
       } else {
-        setMessage('⚠️ 로그인 중 오류가 발생했습니다.');
+        setMessage('로그인 중 오류가 발생했습니다.');
       }
     }
   };
 
   const handleBackgroundClick = (e) => {
-    // 바깥 영역 클릭 시 모달 닫기
     if (e.target.classList.contains('login-modal-overlay')) {
       setShowLoginModal(false);
     }

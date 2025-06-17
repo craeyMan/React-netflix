@@ -45,7 +45,7 @@ const EditPostPage = () => {
       await authApi.put(`/posts/${id}`, updatedPost);
       toast.success('게시글이 수정되었습니다!');
       navigate('/board', { state: { updated: true } }); // 수정 후 목록 새로고침 유도
-    } catch (error) {
+    } catch {
       toast.error('수정 중 오류 발생');
     } finally {
       setLoading(false);

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useBoard } from '../BoardContext';
 import { jwtDecode } from 'jwt-decode';
 import './NewPostPage.style.css';
 import { toast } from 'react-toastify';
 import Spinner from '../../Homepage/components/Spinner/Spinner';
+import authApi from '../../../utils/authApi';
 
 const NewPostPage = () => {
   const [title, setTitle] = useState('');
@@ -14,10 +14,8 @@ const NewPostPage = () => {
   const [isSecret, setIsSecret] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { addPost } = useBoard();
 
   useEffect(() => {
-    // 토큰에서 사용자 이름을 디코딩하여 author 상태에 설정
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (token) {
       try {
@@ -30,7 +28,6 @@ const NewPostPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 제목 및 내용 길이 제한 유효성 검사
     if (title.length > 10) {
       toast.error('제목은 10자 이하여야 합니다.');
       return;
@@ -48,10 +45,9 @@ const NewPostPage = () => {
       isSecret,
     };
 
-    // 새 게시글을 서버에 등록하고 성공 시 게시판 페이지로 이동
     try {
       setLoading(true);
-      await addPost(newPost);
+      await authApi.post('/posts', newPost);
       toast.success('게시글이 등록되었습니다!');
       navigate('/board');
     } catch {

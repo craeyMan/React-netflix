@@ -57,7 +57,6 @@ const PostDetailPage = () => {
   }, [id, location.key]);
 
   const handleDelete = async () => {
-    // 게시글 삭제 확인 및 삭제 처리
     if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
         await authApi.delete(`/posts/${id}`);

@@ -1,9 +1,9 @@
 .board-page {
   margin-top: 40px;
-  color: white;
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
+  color: white;
   background-color: black;
 }
 
@@ -15,19 +15,19 @@
 }
 
 .board-table {
-  border-collapse: collapse;
   width: 100%;
+  border-collapse: collapse;
   color: white;
   background-color: transparent;
 }
 
-.board-table td,
-.board-table th {
+.board-table th,
+.board-table td {
   text-align: center;
-  background-color: transparent;
-  border: 1px solid #ff3c3c;   
   padding: 12px;
   color: white;
+  background-color: transparent;
+  border: 1px solid #ff3c3c;
 }
 
 .board-table th:nth-child(4),
@@ -41,28 +41,28 @@
   font-size: 16px;
   padding: 6px 16px;
   border-radius: 8px;
-  white-space: nowrap;       
+  white-space: nowrap;
 }
 
 .common-input {
   height: 42px;
-  font-size: 16px;
   width: 150px;
-  transition: width 0.3s ease;
   padding: 6px 12px;
+  font-size: 16px;
   border-radius: 5px;
-  border: 1px solid #ff3c3c;
   background-color: black;
   color: white;
-  vertical-align: middle; 
+  border: 1px solid #ff3c3c;
+  transition: width 0.3s ease;
+  vertical-align: middle;
 }
 
 .common-input:focus {
   width: 250px;
-  background-color: black ;
+  background-color: black;
+  color: white;
   border-color: #ff5e5e;
   box-shadow: 0 0 0 2px rgba(255, 60, 60, 0.3);
-  color: white;
 }
 
 .pagination .page-item .page-link {

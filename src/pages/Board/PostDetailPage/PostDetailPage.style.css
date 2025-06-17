@@ -6,9 +6,8 @@
 }
 
 .post-detail-page {
-  margin-top: 40px;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 40px auto 0;
   padding: 20px;
   background-color: black;
   color: white;
@@ -47,7 +46,6 @@
   white-space: pre-wrap;
   font-size: 1.1rem;
   margin-bottom: 30px;
-  color: white;
 }
 
 .post-detail-page .btn,
@@ -68,11 +66,10 @@
 
 .outline-red-btn:hover {
   background-color: #ff3c3c;
-  color: white;
 }
 
 .comment-button {
   margin-left: auto;
-  display: block;
   align-self: flex-end;
+  display: block;
 }

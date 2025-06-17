@@ -32,7 +32,11 @@ const AuthButton = () => {
       <span
         onClick={handleClick}
         className="nav-login-text"
-        style={{ color: 'white', cursor: 'pointer', fontSize: '1rem', padding: '8px 12px' }}
+        style={
+          { color: 'white',
+            cursor: 'pointer', 
+            fontSize: '1rem', 
+            padding: '8px 12px' }}
       >
         {isLoggedIn ? '로그아웃' : '로그인'}
       </span>

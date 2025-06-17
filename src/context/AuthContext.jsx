@@ -50,6 +50,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
     clearExistingTimer();
+    localStorage.setItem("logoutFlag", "true");
+    window.location.reload();
   };
 
   const toggleLoginModal = () => {
@@ -67,6 +69,12 @@ export const AuthProvider = ({ children }) => {
       } catch {
         logout();
       }
+    }
+
+    const logoutFlag = localStorage.getItem("logoutFlag");
+    if (logoutFlag) {
+      toast.success("로그아웃 되었습니다.");
+      localStorage.removeItem("logoutFlag");
     }
   }, []);
 

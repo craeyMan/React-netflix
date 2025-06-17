@@ -19,7 +19,7 @@ const MovieModal = ({ show, onClose, handleClose, movie }) => {
 
   useEffect(() => {
     if (!movie?.id) return;
-
+  
     const fetchData = async () => {
       try {
         const [creditsRes, videoRes, detailRes, releaseDatesRes] = await Promise.all([
@@ -28,27 +28,26 @@ const MovieModal = ({ show, onClose, handleClose, movie }) => {
           api.get(`/movie/${movie.id}`),
           api.get(`/movie/${movie.id}/release_dates`)
         ]);
-
+  
         setCast(creditsRes.data.cast.slice(0, 10));
-
+  
         const trailers = videoRes.data.results.filter(
           (video) => video.type === 'Trailer' && video.site === 'YouTube'
         );
         setTrailerKey(trailers[0]?.key || null);
-
+  
         const date = detailRes.data.release_date;
         if (date) setReleaseYear(date.slice(0, 4));
-
+  
         const kr = releaseDatesRes.data.results.find(r => r.iso_3166_1 === 'KR');
         const krCert = kr?.release_dates?.[0]?.certification;
         if (krCert) setCertification(krCert);
-
-        await fetchUserLikes();
+  
       } catch (err) {
-        console.error('Failed to fetch movie modal data:', err);
+        // console 제거 요청 반영
       }
     };
-
+  
     fetchData();
   }, [movie?.id]);
 

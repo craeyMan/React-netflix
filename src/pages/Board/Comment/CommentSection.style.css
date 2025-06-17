@@ -11,14 +11,14 @@
 
 .comment-form input,
 .comment-form textarea {
-  background-color: #000 !important;
+  background-color: #000 ;
   color: white;
   border: 1px solid #dc3545;
 }
 
 .comment-form input:focus,
 .comment-form textarea:focus {
-  background-color: #000 !important;
+  background-color: #000 ;
   color: white;
   border-color: #ff4d4d;
   box-shadow: none;

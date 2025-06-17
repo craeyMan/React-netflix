@@ -15,15 +15,19 @@ const SignupPage = ({ setIsSignup }) => {
     gender: '',
   });
 
-  // 입력 필드 값 상태 업데이트
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      toast.warn('비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
     try {
-      // 회원가입 요청 시도
       await authApi.post('/api/users/signup', {
         username: formData.username,
         password: formData.password,
@@ -34,15 +38,13 @@ const SignupPage = ({ setIsSignup }) => {
         gender: formData.gender === 'male' ? '남' : '여',
       });
 
-      // 성공 시 로그인 화면으로 전환
-      toast.success('✅ 회원가입 성공! 이제 로그인하세요.');
-      setIsSignup(false);
+      toast.success('회원가입 성공! 이제 로그인하세요.');
+      setIsSignup(false); // 로그인 화면으로 전환
     } catch (err) {
-      // 이미 존재하는 아이디일 경우 또는 기타 오류 처리
       if (err.response?.status === 400) {
-        toast.warn('⚠️ 이미 존재하는 아이디입니다.');
+        toast.warn('이미 존재하는 아이디입니다.');
       } else {
-        toast.error('🚨 회원가입 중 오류가 발생했습니다.');
+        toast.error('회원가입 중 오류가 발생했습니다.');
       }
     }
   };
@@ -98,7 +100,9 @@ const SignupPage = ({ setIsSignup }) => {
           >
             <option value="">월</option>
             {[...Array(12)].map((_, i) => (
-              <option key={i + 1} value={i + 1}>{i + 1}</option>
+              <option key={i + 1} value={i + 1}>
+                {i + 1}
+              </option>
             ))}
           </select>
 
@@ -110,7 +114,9 @@ const SignupPage = ({ setIsSignup }) => {
           >
             <option value="">일</option>
             {[...Array(31)].map((_, i) => (
-              <option key={i + 1} value={i + 1}>{i + 1}</option>
+              <option key={i + 1} value={i + 1}>
+                {i + 1}
+              </option>
             ))}
           </select>
 
@@ -126,7 +132,9 @@ const SignupPage = ({ setIsSignup }) => {
           </select>
         </div>
 
-        <button type="submit" className="login-button">가입하기</button>
+        <button type="submit" className="login-button">
+          가입하기
+        </button>
         <button
           type="button"
           className="signup-link"

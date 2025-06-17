@@ -16,7 +16,6 @@ const Top10Slider = ({ onMovieClick }) => {
   const { top10, likedMap, toggleLike } = useLike();
 
   if (!top10) return <Spinner />;
-  if (top10.length === 0) return <Alert variant="warning">Top10 영화가 없습니다.</Alert>;
 
   const handleLike = async (movieId) => {
     if (!isLoggedIn) {

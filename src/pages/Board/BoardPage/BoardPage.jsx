@@ -18,13 +18,29 @@ const BoardPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      toast.warn('로그인 후 이용 가능합니다.');
+      navigate('/', { replace: true });
+      return;
+    }
+    fetchPosts();
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (location.state?.updated) {
+      fetchPosts();
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
+
   const fetchPosts = async () => {
     try {
       setLoading(true);
       const res = await authApi.get('/posts');
       setPosts(res.data.reverse());
-    } catch (err) {
-      // 에러 처리 시 UI 알림 등을 사용할 수 있음
+    } catch {
+      toast.error('게시글을 불러오는 데 실패했습니다.');
     } finally {
       setLoading(false);
     }
@@ -37,25 +53,12 @@ const BoardPage = () => {
       const res = await authApi.get(`/posts/search?keyword=${keyword}`);
       setPosts(res.data.reverse());
       setCurrentPage(1);
-    } catch (err) {
-      // 에러 처리 시 UI 알림 등을 사용할 수 있음
+    } catch {
+      toast.error('검색 중 오류 발생');
     } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetchPosts();
-    }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    if (location.state?.updated) {
-      fetchPosts();
-      window.history.replaceState({}, document.title);
-    }
-  }, [location.state]);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -98,6 +101,9 @@ const BoardPage = () => {
     return <Pagination className="custom-pagination">{items}</Pagination>;
   };
 
+
+  if (!isLoggedIn) return null;
+
   return (
     <Container className="board-page">
       <div className="d-flex justify-content-between align-items-center mb-3">
@@ -139,58 +145,61 @@ const BoardPage = () => {
               </tr>
             </thead>
             <tbody>
-              {currentPosts.map((post, idx) => (
-                <tr key={post.id}>
-                  <td>{indexOfFirstPost + idx + 1}</td>
-                  <td>
-                    <span
-                      className="post-title-hover"
-                      onClick={() => {
-                        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-                        if (!token) return;
+              {currentPosts.map((post, idx) => {
+                const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+                let username = '', role = '', isAdmin = false;
 
-                        let username = '';
-                        let role = '';
-                        try {
-                          const decoded = JSON.parse(atob(token.split('.')[1]));
-                          username = decoded.sub;
-                          role = decoded.role;
-                        } catch (e) {
-                          toast.warn('토큰 정보 확인 실패');
-                          return;
-                        }
+                if (token) {
+                  try {
+                    const decoded = JSON.parse(atob(token.split('.')[1]));
+                    username = decoded.sub;
+                    role = decoded.role;
+                    isAdmin = role?.toUpperCase().includes('ADMIN');
+                  } catch {
+                    toast.warn('토큰 정보 확인 실패');
+                  }
+                }
 
-                        const isAdmin = role?.toUpperCase().includes('ADMIN');
-                        const isAuthor = post.author === username;
+                const isAuthor = post.author === username;
+                const canAccess = !post.isSecret || isAuthor || isAdmin;
 
-                        if (post.isSecret && !isAdmin && !isAuthor) {
-                          toast.warn('비밀글입니다.');
-                          return;
-                        }
-
-                        navigate(`/board/${post.id}`);
-                      }}
-                    >
-                      {post.title}
-                      {post.isSecret && (
-                        <span style={{ marginLeft: '6px', color: 'red' }}>🔒</span>
-                      )}
-                    </span>
-                  </td>
-                  <td>{post.author}</td>
-                  <td>
-                    {new Intl.DateTimeFormat('ko-KR', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: 'numeric',
-                      second: 'numeric',
-                      hour12: true,
-                    }).format(new Date(post.createdAt))}
-                  </td>
-                </tr>
-              ))}
+                return (
+                  <tr key={post.id}>
+                    <td>{indexOfFirstPost + idx + 1}</td>
+                    <td>
+                      <span
+                        className="post-title-hover"
+                        onClick={() => {
+                          if (!canAccess) {
+                            toast.warn('비밀글입니다.');
+                            return;
+                          }
+                          navigate(`/board/${post.id}`);
+                        }}
+                      >
+                        {post.title}
+                        {post.isSecret && (
+                          <span style={{ marginLeft: '6px',
+                                         color: 'red' }}
+                                         >🔒</span>
+                        )}
+                      </span>
+                    </td>
+                    <td>{post.author}</td>
+                    <td>
+                      {new Intl.DateTimeFormat('ko-KR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        second: 'numeric',
+                        hour12: true,
+                      }).format(new Date(post.createdAt))}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
 

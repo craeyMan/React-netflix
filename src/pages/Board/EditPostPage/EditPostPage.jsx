@@ -26,7 +26,7 @@ const EditPostPage = () => {
         setAuthor(post.author);
         setIsSecret(post.isSecret); // 기존 비밀글 여부 반영
       } catch {
-        alert('게시글을 불러오는 데 실패했습니다.');
+        toast.warn('로그인 후 이용 가능합니다.');
         navigate('/board');
       } finally {
         setLoading(false);

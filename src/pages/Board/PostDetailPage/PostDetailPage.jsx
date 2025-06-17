@@ -24,23 +24,23 @@ const PostDetailPage = () => {
   const isAdmin = role === 'ADMIN';
 
   useEffect(() => {
-    // 토큰이 없으면 로그인 페이지로 이동
     if (!token) {
-      toast.warn('로그인이 필요합니다.');
-      navigate('/login');
+      toast.warn('로그인 후 이용 가능합니다.');
+      navigate('/', { replace: true });
       return;
     }
 
-    // 게시글 불러오기 및 비밀글 접근 권한 검사
     const fetchPost = async () => {
       try {
         const res = await authApi.get(`/posts/${id}`);
         const fetchedPost = res.data;
-        const isAuthor = username === fetchedPost.author;
 
-        if (!fetchedPost.isSecret || isAuthor || isAdmin) {
+        const isAuthor = username === fetchedPost.author;
+        const hasPermission = !fetchedPost.isSecret || isAuthor || isAdmin;
+
+        if (hasPermission) {
           setPost(fetchedPost);
-          if (isAuthor) setCanEdit(true);
+          setCanEdit(isAuthor);
         } else {
           toast.warn('비밀글 접근 권한이 없습니다.');
           navigate('/board');
@@ -68,7 +68,10 @@ const PostDetailPage = () => {
     }
   };
 
+  // 렌더링 차단
+  if (!token) return null;
   if (loading) return <Spinner />;
+  if (!post) return null;
 
   return (
     <Container className="post-detail-page">
@@ -82,6 +85,7 @@ const PostDetailPage = () => {
             <span className="post-date">
               {new Date(post.createdAt).toLocaleString()}
             </span>
+            <span className="post-views ms-3">조회수: {post.views}</span>
           </div>
         </div>
 
@@ -100,7 +104,10 @@ const PostDetailPage = () => {
             <Button className="outline-red-btn" onClick={handleDelete}>
               삭제하기
             </Button>
-            <Button className="outline-red-btn" onClick={() => navigate(`/board/edit/${post.id}`)}>
+            <Button
+              className="outline-red-btn"
+              onClick={() => navigate(`/board/edit/${post.id}`)}
+            >
               수정하기
             </Button>
           </>

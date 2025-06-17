@@ -118,7 +118,7 @@ const CommentSection = ({ postId, postTitle, postAuthor, isSecret }) => {
           </Row>
           <Form.Group className="mb-2">
             <Form.Label className="comment-label">댓글 내용</Form.Label>
-            <Form.Control
+            <Form.Control 
               as="textarea"
               rows={4}
               placeholder="댓글을 입력하세요"

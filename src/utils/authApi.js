@@ -32,15 +32,12 @@ authApi.interceptors.response.use(
     if ((status === 401 || status === 403) && isTokenExpired && !isLogout) {
       isLogout = true;
       toast.info('로그인 시간이 만료되어 로그아웃됩니다.');
-
       localStorage.removeItem('token');
       sessionStorage.removeItem('token');
-
       setTimeout(() => {
         window.location.href = '/';
       }, 1500);
     }
-
     return Promise.reject(error);
   }
 );

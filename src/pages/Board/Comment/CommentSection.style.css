@@ -24,6 +24,11 @@
   box-shadow: none;
 }
 
+.comment-form textarea::placeholder {
+  color: #999; 
+  opacity: 1;  
+}
+
 .comment-form textarea {
   resize: none;
 }

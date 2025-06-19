@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -8,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const logoutTimer = useRef(null);
+  const navigate = useNavigate();
 
   const clearExistingTimer = () => {
     if (logoutTimer.current) clearTimeout(logoutTimer.current);
@@ -51,7 +53,7 @@ export const AuthProvider = ({ children }) => {
     sessionStorage.removeItem("token");
     clearExistingTimer();
     localStorage.setItem("logoutFlag", "true");
-    window.location.reload();
+    navigate("/");
   };
 
   const toggleLoginModal = () => {

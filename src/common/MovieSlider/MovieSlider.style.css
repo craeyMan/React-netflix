@@ -14,7 +14,6 @@
   width: auto;                   
 }
 
-/* ✅ Carousel 내부 트랙 (카드들이 들어있는 라인) */
 .react-multi-carousel-track {
   justify-content: center;      
   align-items: stretch;
@@ -22,7 +21,6 @@
   display: flex;
 }
 
-/* ✅ 슬라이드 내부 카드 */
 .movie-card {
   margin: 0;
   padding: 0;

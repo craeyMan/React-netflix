@@ -40,7 +40,6 @@ const AuthButton = () => {
       >
         {isLoggedIn ? '로그아웃' : '로그인'}
       </span>
-      {/* 로그인 모달 표시 여부에 따라 렌더링 */}
       {showLoginModal && <LoginModal />}
     </>
   );

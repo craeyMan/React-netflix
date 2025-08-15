@@ -2,7 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const authApi = axios.create({
-  baseURL: 'http://localhost:3500',
+  baseURL: process.env.REACT_APP_API_URL || 'https://rsmasj.com',
 });
 
 // 요청 시 Authorization 헤더에 JWT 토큰 추가

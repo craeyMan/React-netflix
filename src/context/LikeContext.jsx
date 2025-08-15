@@ -19,6 +19,7 @@ export const LikeProvider = ({ children }) => {
   const fetchTop10 = async () => {
     try {
       const res = await authApi.get('/likes/top10');
+
       const movieDetails = await Promise.all(
         res.data.map(async (item) => {
           const detail = await api.get(`/movie/${item.movieId}`);

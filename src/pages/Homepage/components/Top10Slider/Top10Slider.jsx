@@ -27,7 +27,7 @@ const Top10Slider = ({ onMovieClick }) => {
 
   return (
     <div className="top10-slider-wrapper">
-      <h2 className="top10-title">Top 10</h2>
+      <h2 className="top10-title">좋아요 순</h2>
       <Carousel
         responsive={responsive}
         infinite
